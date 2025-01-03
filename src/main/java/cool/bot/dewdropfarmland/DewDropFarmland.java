@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 
 @Mod(DewDropFarmland.MODID)
 public class DewDropFarmland {
-    public static final String MODID = "dew_drop_farmland";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final String MODID = "dew_drop_farmland_growth";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public DewDropFarmland() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
