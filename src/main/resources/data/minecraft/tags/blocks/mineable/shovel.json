@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "dew_drop_farmland_growth:weak_fertilized_farmland",
+    "dew_drop_farmland_growth:strong_fertilized_farmland",
+    "dew_drop_farmland_growth:hydrating_farmland",
+    "dew_drop_farmland_growth:bountiful_fertilized_farmland"
+  ]
+}

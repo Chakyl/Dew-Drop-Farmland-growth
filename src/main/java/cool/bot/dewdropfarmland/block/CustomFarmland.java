@@ -15,6 +15,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraft.resources.ResourceLocation;
@@ -60,6 +63,11 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
         return super.getToolModifiedState(state, context, toolAction, simulate);
     }
 
+    @Override
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable) {
+        net.minecraftforge.common.PlantType plantType = plantable.getPlantType(world, pos.relative(facing));
+        return plantType == PlantType.CROP || plantType == PlantType.PLAINS;
+    }
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -78,7 +86,7 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
             // check before rain
 
             if (dayTime >= Config.dailyTimeMin && dayTime <= Config.dailyTimeMin + 10) {
-                BlockState fertilizer = level.getBlockState(pos.below());
+                BlockState farmland = level.getBlockState(pos);
                 if (!Util.isMoistWaterable(level, pos)) {
                     if (RNG.mc_ihundo(random, Config.dailyDecayChance)) {
                         level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
@@ -94,10 +102,10 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                         if (!cropBlock.isMaxAge(crop) && FertilityConfig.seasonalCrops.get() && (fertile || isGlassAboveBlock(level, abovePos))) {
                             int increase = 1;
                             if (cropBlock.getAge(crop) == 0) {
-                                if (fertilizer.is(SturdyFarmlandBlockTags.WEAK_FERTILIZER)) {
+                                if (farmland.is(SturdyFarmlandBlockTags.WEAK_FERTILIZED_FARMLAND)) {
                                     increase = 2;
                                 }
-                                if (fertilizer.is(SturdyFarmlandBlockTags.STRONG_FERTILIZER)) {
+                                if (farmland.is(SturdyFarmlandBlockTags.STRONG_FERTILIZED_FARMLAND)) {
                                     increase = 3;
                                 }
                             }
@@ -116,11 +124,14 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                                 }
                             }
                         }
+                        if (cropBlock.isMaxAge(crop)) {
+                            Util.setDry(level, pos);
+                        }
                     } else if (crop.getBlock() instanceof BuddingTomatoBlock tomatoBlock) {
                         tomatoBlock.growPastMaxAge(crop, level, abovePos, random);
                     }
                     if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
-                        if (!fertilizer.is(SturdyFarmlandBlockTags.HYDRATING_FERTILIZER)) {
+                        if (!farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND)) {
                             Util.setDry(level, pos);
                         }
                     }

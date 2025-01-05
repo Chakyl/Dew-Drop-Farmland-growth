@@ -1,0 +1,7 @@
+{
+  "block.dew_drop_farmland_growth.weak_fertilized_farmland": "Weak Fertilized Farmland",
+  "block.dew_drop_farmland_growth.strong_fertilized_farmland": "Strong Fertilized Farmland",
+  "block.dew_drop_farmland_growth.hydrating_farmland": "Hydrating Farmland",
+  "block.dew_drop_farmland_growth.bountiful_fertilized_farmland": "Bountiful Fertilized Farmland",
+  "itemGroup.dew_drop_farmland_growth": "Dew Drop Farmland - Growth Edition"
+}
