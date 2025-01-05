@@ -3,7 +3,7 @@ package cool.bot.dewdropfarmland;
 import com.mojang.logging.LogUtils;
 import cool.bot.dewdropfarmland.block.FarmlandEventHandler;
 import cool.bot.dewdropfarmland.registry.CreativeTab;
-import cool.bot.dewdropfarmland.registry.ModBlocks;
+import cool.bot.dewdropfarmland.registry.ModElements;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -20,7 +20,7 @@ public class DewDropFarmland {
     public DewDropFarmland() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModBlocks.register(modEventBus);
+        ModElements.register(modEventBus);
         CreativeTab.TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(FarmlandEventHandler.class);
 

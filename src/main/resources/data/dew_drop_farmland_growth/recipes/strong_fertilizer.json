@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+      "p": {
+        "item": "minecraft:blaze_powder"
+      },
+      "c": {
+        "item": "minecraft:clay_ball"
+      },
+      "b": {
+        "item": "minecraft:bone_block"
+      }
+    },
+    "pattern": [
+      "bpb",
+      "pbp",
+      "bpb"
+    ],
+    "result": {
+      "item": "dew_drop_farmland_growth:strong_fertilizer"
+    },
+    "show_notification": true
+  }
