@@ -14,11 +14,12 @@
     },
     "pattern": [
       "bpb",
-      "pbp",
+      "pcp",
       "bpb"
     ],
     "result": {
-      "item": "dew_drop_farmland_growth:strong_fertilizer"
+      "item": "dew_drop_farmland_growth:strong_fertilizer",
+      "count": "4"
     },
     "show_notification": true
   }

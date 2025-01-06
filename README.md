@@ -10,16 +10,16 @@ Every morning, crops will grow by 1 stage if they are watered. This is calculate
 
 This is best paired with a mod that disables random ticks, such as [No Random Ticks](https://www.curseforge.com/minecraft/mc-mods/no-random-ticks)
 
-
 ### Fertilized Farmland
 
 To pair with the new growth system, three new fertilizers are added:
 
 - Weak Fertilizer - Boosts initial crop growth by 1 day (Age)
-- Strong Fertilizer - Boosts inital crop growth by 2 days (Ages)
-- Hydrating Fertilizer - Does not dry in the morning
+- Strong Fertilizer - Boosts initial crop growth by 2 days (Ages)
+- Hydrating Fertilizer - Does not dry in the morning until fully grown
 - Bountiful Fertilizer - A blank canvas for modpack makers to add their own mechanics
-
+- Low Quality Fertilizer - Blank farmland with a tag for Quality Food
+- High Quality Fertilizer - Theoretical stronger version of the above
 
 ### Dependencies 
 

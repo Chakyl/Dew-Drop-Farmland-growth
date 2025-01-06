@@ -11,9 +11,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.registries.RegistryObject;
 
 public class FertilizerItem extends Item {
     public FertilizerItem(Properties pProperties) {
@@ -36,13 +38,17 @@ public class FertilizerItem extends Item {
                     state = level.getBlockState(posClicked);
                 }
                 if (stack.is(ModElements.WEAK_FERTILIZER.get())) {
-                    level.setBlock(posClicked, ModElements.WEAK_FERTILIZED_FARMLAND.get().defaultBlockState().setValue(BlockStateProperties.MOISTURE, state.getValue(BlockStateProperties.MOISTURE)), 3);
+                    level.setBlock(posClicked, moisturizer(ModElements.WEAK_FERTILIZED_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.STRONG_FERTILIZER.get())) {
-                    level.setBlock(posClicked, ModElements.STRONG_FERTILIZED_FARMLAND.get().defaultBlockState(), 3);
+                    level.setBlock(posClicked, moisturizer(ModElements.STRONG_FERTILIZED_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.HYDRATING_FERTILIZER.get())) {
-                    level.setBlock(posClicked, ModElements.HYDRATING_FARMLAND.get().defaultBlockState(), 3);
+                    level.setBlock(posClicked, moisturizer(ModElements.HYDRATING_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.BOUNTIFUL_FERTILIZER.get())) {
-                    level.setBlock(posClicked, ModElements.BOUNTIFUL_FERTILIZED_FARMLAND.get().defaultBlockState(), 3);
+                    level.setBlock(posClicked, moisturizer(ModElements.BOUNTIFUL_FERTILIZED_FARMLAND, state), 3);
+                } else if (stack.is(ModElements.LOW_QUALITY_FERTILIZER.get())) {
+                    level.setBlock(posClicked, moisturizer(ModElements.LOW_QUALITY_FERTILIZED_FARMLAND, state), 3);
+                } else if (stack.is(ModElements.HIGH_QUALITY_FERTILIZER.get())) {
+                    level.setBlock(posClicked, moisturizer(ModElements.HIGH_QUALITY_FERTILIZED_FARMLAND, state), 3);
                 } else {
                     return InteractionResult.FAIL;
                 }
@@ -53,7 +59,10 @@ public class FertilizerItem extends Item {
                 return InteractionResult.SUCCESS;
             }
         }
-
         return InteractionResult.FAIL;
+    }
+
+    private static BlockState moisturizer(RegistryObject<Block> block, BlockState state) {
+        return block.get().defaultBlockState().setValue(BlockStateProperties.MOISTURE, state.getValue(BlockStateProperties.MOISTURE));
     }
 }

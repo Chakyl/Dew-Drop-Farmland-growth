@@ -2,20 +2,20 @@
     "type": "minecraft:crafting_shaped",
     "category": "misc",
     "key": {
-      "h": {
-        "item": "minecraft:honeycomb"
+      "f": {
+        "tag": "minecraft:fishes"
       },
-      "b": {
-        "item": "minecraft:bone_meal"
+      "c": {
+        "item": "minecraft:charcoal"
       }
     },
     "pattern": [
-      "bhb",
-      "hbh",
-      "bhb"
+      " c ",
+      "cfc",
+      " c "
     ],
     "result": {
-      "item": "dew_drop_farmland_growth:weak_fertilizer",
+      "item": "dew_drop_farmland_growth:low_quality_fertilizer",
       "count": "4"
     },
     "show_notification": true
