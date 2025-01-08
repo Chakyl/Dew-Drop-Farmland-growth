@@ -97,7 +97,6 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                     BlockState crop = level.getBlockState(abovePos);
                     ResourceLocation fertileKey = ForgeRegistries.BLOCKS.getKey(crop.getBlock());
                     boolean fertile = ModFertility.isCropFertile(fertileKey != null ? fertileKey.toString() : null, level, abovePos);
-
                     if (crop.getBlock() instanceof CropBlock cropBlock) {
                         if (!cropBlock.isMaxAge(crop) && FertilityConfig.seasonalCrops.get() && (fertile || isGlassAboveBlock(level, abovePos))) {
                             int increase = 1;

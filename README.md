@@ -12,7 +12,7 @@ This is best paired with a mod that disables random ticks, such as [No Random Ti
 
 ### Fertilized Farmland
 
-To pair with the new growth system, three new fertilizers are added:
+To pair with the new growth system, six new fertilizers are added:
 
 - Weak Fertilizer - Boosts initial crop growth by 1 day (Age)
 - Strong Fertilizer - Boosts initial crop growth by 2 days (Ages)
