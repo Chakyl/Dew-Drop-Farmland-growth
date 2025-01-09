@@ -85,13 +85,12 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
             long dayTime = level.getDayTime() % 24000;
             // check before rain
 
-            if (dayTime >= Config.dailyTimeMin && dayTime <= Config.dailyTimeMin + 10) {
+            if (dayTime >= Config.dailyTimeMin && dayTime < Config.dailyTimeMin + 10) {
                 BlockState farmland = level.getBlockState(pos);
                 if (!Util.isMoistWaterable(level, pos)) {
                     if (RNG.mc_ihundo(random, Config.dailyDecayChance)) {
                         level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
                     }
-
                 } else {
                     BlockPos abovePos = pos.above();
                     BlockState crop = level.getBlockState(abovePos);
