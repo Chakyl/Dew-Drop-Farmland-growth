@@ -1,25 +1,25 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "category": "misc",
-    "key": {
-      "p": {
-        "item": "minecraft:blaze_powder"
-      },
-      "c": {
-        "item": "minecraft:clay_ball"
-      },
-      "b": {
-        "item": "minecraft:bone_block"
-      }
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "t": {
+      "item": "minecraft:torchflower"
     },
-    "pattern": [
-      "bpb",
-      "pcp",
-      "bpb"
-    ],
-    "result": {
-      "item": "dew_drop_farmland_growth:strong_fertilizer",
-      "count": 4
+    "s": {
+      "item": "dew_drop_farmland_growth:strong_fertilizer"
     },
-    "show_notification": true
-  }
+    "b": {
+      "item": "minecraft:dragon_breath"
+    }
+  },
+  "pattern": [
+    "sbs",
+    "btb",
+    "sbs"
+  ],
+  "result": {
+    "item": "dew_drop_farmland_growth:hyper_fertilizer",
+    "count": 1
+  },
+  "show_notification": true
+}

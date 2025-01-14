@@ -7,12 +7,15 @@
       },
       "c": {
         "item": "minecraft:charcoal"
+      },
+      "l": {
+        "item": "dew_drop_farmland_growth:low_quality_fertilizer"
       }
     },
     "pattern": [
-      " c ",
+      "lcl",
       "csc",
-      " c "
+      "lcl"
     ],
     "result": {
       "item": "dew_drop_farmland_growth:high_quality_fertilizer",

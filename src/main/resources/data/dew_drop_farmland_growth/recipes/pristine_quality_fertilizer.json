@@ -1,22 +1,25 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "category": "misc",
-    "key": {
-      "s": {
-        "item": "minecraft:netherite_scrap"
-      },
-      "c": {
-        "item": "minecraft:charcoal"
-      }
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": {
+      "item": "minecraft:pitcher_plant"
     },
-    "pattern": [
-      " c ",
-      "csc",
-      " c "
-    ],
-    "result": {
-      "item": "dew_drop_farmland_growth:high_quality_fertilizer",
-      "count": 4
+    "c": {
+      "item": "minecraft:chorus_flower"
     },
-    "show_notification": true
-  }
+    "h": {
+      "item": "dew_drop_farmland_growth:high_quality_fertilizer"
+    }
+  },
+  "pattern": [
+    "hch",
+    "cpc",
+    "hch"
+  ],
+  "result": {
+    "item": "dew_drop_farmland_growth:pristine_quality_fertilizer",
+    "count": 4
+  },
+  "show_notification": true
+}

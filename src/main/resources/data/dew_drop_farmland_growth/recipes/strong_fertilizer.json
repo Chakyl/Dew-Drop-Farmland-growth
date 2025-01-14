@@ -2,20 +2,20 @@
     "type": "minecraft:crafting_shaped",
     "category": "misc",
     "key": {
-      "p": {
-        "item": "minecraft:blaze_powder"
+      "r": {
+        "item": "minecraft:blaze_rod"
       },
-      "c": {
-        "item": "minecraft:clay_ball"
+      "w": {
+        "item": "dew_drop_farmland_growth:weak_fertilizer"
       },
       "b": {
         "item": "minecraft:bone_block"
       }
     },
     "pattern": [
-      "bpb",
-      "pcp",
-      "bpb"
+      "wbw",
+      "brb",
+      "wbw"
     ],
     "result": {
       "item": "dew_drop_farmland_growth:strong_fertilizer",
