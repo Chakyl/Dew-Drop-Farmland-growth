@@ -134,6 +134,13 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                     if (farmland.is(SturdyFarmlandBlockTags.STRONG_FERTILIZED_FARMLAND)) {
                         increase = 3;
                     }
+                    if (farmland.is(SturdyFarmlandBlockTags.HYPER_FERTILIZED_FARMLAND)) {
+                        if (cropBlock.getMaxAge() > 3) {
+                            increase = 4;
+                        } else {
+                            increase = 3;
+                        }
+                    }
                 }
                 BlockState newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + increase);
                 level.setBlock(abovePos, newState, 2);

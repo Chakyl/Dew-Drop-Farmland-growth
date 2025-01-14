@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+      "s": {
+        "item": "minecraft:netherite_scrap"
+      },
+      "c": {
+        "item": "minecraft:charcoal"
+      }
+    },
+    "pattern": [
+      " c ",
+      "csc",
+      " c "
+    ],
+    "result": {
+      "item": "dew_drop_farmland_growth:high_quality_fertilizer",
+      "count": 4
+    },
+    "show_notification": true
+  }

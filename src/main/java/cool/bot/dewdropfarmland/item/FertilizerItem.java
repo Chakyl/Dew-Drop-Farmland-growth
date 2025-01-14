@@ -41,6 +41,8 @@ public class FertilizerItem extends Item {
                     level.setBlock(posClicked, moisturizer(ModElements.WEAK_FERTILIZED_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.STRONG_FERTILIZER.get())) {
                     level.setBlock(posClicked, moisturizer(ModElements.STRONG_FERTILIZED_FARMLAND, state), 3);
+                } else if (stack.is(ModElements.HYPER_FERTILIZER.get())) {
+                    level.setBlock(posClicked, moisturizer(ModElements.HYPER_FERTILIZED_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.HYDRATING_FERTILIZER.get())) {
                     level.setBlock(posClicked, moisturizer(ModElements.HYDRATING_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.BOUNTIFUL_FERTILIZER.get())) {
@@ -49,6 +51,8 @@ public class FertilizerItem extends Item {
                     level.setBlock(posClicked, moisturizer(ModElements.LOW_QUALITY_FERTILIZED_FARMLAND, state), 3);
                 } else if (stack.is(ModElements.HIGH_QUALITY_FERTILIZER.get())) {
                     level.setBlock(posClicked, moisturizer(ModElements.HIGH_QUALITY_FERTILIZED_FARMLAND, state), 3);
+                } else if (stack.is(ModElements.PRISTINE_QUALITY_FERTILIZER.get())) {
+                    level.setBlock(posClicked, moisturizer(ModElements.PRISTINE_QUALITY_FERTILIZED_FARMLAND, state), 3);
                 } else {
                     return InteractionResult.FAIL;
                 }

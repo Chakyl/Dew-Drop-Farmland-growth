@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "dirt": "minecraft:block/dirt",
+    "top": "dew_drop_farmland_growth:block/pristine_quality_fertilized_farmland"
+  }
+}
