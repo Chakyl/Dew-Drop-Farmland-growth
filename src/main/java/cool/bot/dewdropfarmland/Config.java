@@ -39,13 +39,13 @@ public class Config
             .define("dailyReset", true);
     private static final ForgeConfigSpec.IntValue DAILY_TIME_MIN = BUILDER
             .comment("The time of day daily reset logic will occur (within 10 ticks)")
-            .defineInRange("dailyTimeMin", 0, 0, 24000);
+            .defineInRange("dailyTimeMin", 5, 0, 24000);
     private static final ForgeConfigSpec.IntValue DAILY_DRY_CHANCE = BUILDER
             .comment("The chance that farmland will become dry")
             .defineInRange("dailyDryChance", 100, 0, 100);
     private static final ForgeConfigSpec.IntValue DAILY_DECAY_CHANCE = BUILDER
             .comment("The chance that dry farmland will decay into dirt")
-            .defineInRange("dailyDecayChance", 50, 0, 100);
+            .defineInRange("dailyDecayChance", 100, 0, 100);
     private static final ForgeConfigSpec.BooleanValue SHOVEL_REVERTING = BUILDER
             .comment("If shovels can turn farmland to dirt when right clicking")
             .define("shovelReverting", true);
@@ -67,7 +67,6 @@ public class Config
     public static boolean sturdyFarmland;
     public static boolean noRandomTick;
     public static boolean shovelReverting;
-
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)

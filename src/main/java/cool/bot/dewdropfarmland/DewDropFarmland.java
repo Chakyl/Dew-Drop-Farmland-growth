@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 public class DewDropFarmland {
     public static final String MODID = "dew_drop_farmland_growth";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static boolean FARMERS_DELIGHT_INSTALLED = false;
 
     public DewDropFarmland() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
