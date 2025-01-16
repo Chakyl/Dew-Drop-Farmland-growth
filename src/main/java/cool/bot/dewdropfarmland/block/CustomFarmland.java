@@ -25,7 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
-import sereneseasons.config.FertilityConfig;
+import sereneseasons.init.ModConfig;
 import sereneseasons.init.ModFertility;
 import sereneseasons.init.ModTags;
 
@@ -97,7 +97,9 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                     BlockState crop = level.getBlockState(abovePos);
                     growCrop(crop, level, abovePos, farmland, random);
                     if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
-                        if (!farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND)) {
+                        if (!farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) ) {
+                            Util.setDry(level, pos);
+                        } else if (crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getMaxAge() - cropBlock.getAge(crop) == 1 ) {
                             Util.setDry(level, pos);
                         }
                     }
@@ -125,7 +127,7 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
         ResourceLocation fertileKey = ForgeRegistries.BLOCKS.getKey(crop.getBlock());
         boolean fertile = ModFertility.isCropFertile(fertileKey != null ? fertileKey.toString() : null, level, abovePos);
         if (crop.getBlock() instanceof CropBlock cropBlock) {
-            if (!cropBlock.isMaxAge(crop) && FertilityConfig.seasonalCrops.get() && (fertile || isGlassAboveBlock(level, abovePos))) {
+            if (!cropBlock.isMaxAge(crop) && ModConfig.fertility.seasonalCrops && (fertile || isGlassAboveBlock(level, abovePos))) {
                 int increase = 1;
                 if (cropBlock.getAge(crop) == 0) {
                     if (farmland.is(SturdyFarmlandBlockTags.WEAK_FERTILIZED_FARMLAND)) {
@@ -158,7 +160,7 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                 }
             }
         } else if (crop.getBlock() instanceof BuddingTomatoBlock tomatoBlock) {
-            if (FertilityConfig.seasonalCrops.get() && (fertile || isGlassAboveBlock(level, abovePos))) {
+            if (ModConfig.fertility.seasonalCrops && (fertile || isGlassAboveBlock(level, abovePos))) {
                 tomatoBlock.growPastMaxAge(crop, level, abovePos, random);
             }
         }
