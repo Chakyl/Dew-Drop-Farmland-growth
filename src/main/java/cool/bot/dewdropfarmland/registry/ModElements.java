@@ -2,12 +2,15 @@ package cool.bot.dewdropfarmland.registry;
 
 import cool.bot.dewdropfarmland.DewDropFarmland;
 import cool.bot.dewdropfarmland.block.CustomFarmland;
+import cool.bot.dewdropfarmland.block.CustomStemBlock;
 import cool.bot.dewdropfarmland.item.FertilizerItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.StemGrownBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,9 +24,13 @@ public class ModElements {
     public static final DeferredRegister<Block> FARMLAND_BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, DewDropFarmland.MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DewDropFarmland.MODID);
 
+    public static final RegistryObject<Block> PUMPKIN_STEM = registerVanillaBlock("pumpkin_stem",
+            () -> new CustomStemBlock((StemGrownBlock) Blocks.PUMPKIN, () -> { return Items.PUMPKIN_SEEDS; }, BlockBehaviour.Properties.copy(Blocks.PUMPKIN_STEM)));
+    public static final RegistryObject<Block> MELON_STEM = registerVanillaBlock("melon_stem",
+            () -> new CustomStemBlock((StemGrownBlock) Blocks.MELON, () ->  { return Items.MELON_SEEDS; }, BlockBehaviour.Properties.copy(Blocks.MELON_STEM)));
+
     public static final RegistryObject<Block> FARMLAND = registerVanillaBlock("farmland",
             () -> new CustomFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND)));
-
     public static final RegistryObject<Block> WEAK_FERTILIZED_FARMLAND = registerModBlock("weak_fertilized_farmland",
             () -> new CustomFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND)));
     public static final RegistryObject<Block> STRONG_FERTILIZED_FARMLAND = registerModBlock("strong_fertilized_farmland",
