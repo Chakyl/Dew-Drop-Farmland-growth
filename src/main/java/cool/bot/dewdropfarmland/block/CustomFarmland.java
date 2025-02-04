@@ -7,16 +7,12 @@ import cool.bot.dewdropfarmland.DewDropFarmland;
 import cool.bot.dewdropfarmland.tag.SturdyFarmlandBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -27,6 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
+import net.ribs.vintagedelight.block.custom.GearoBerryBushBlock;
 import sereneseasons.init.ModConfig;
 import sereneseasons.init.ModFertility;
 import sereneseasons.init.ModTags;
@@ -35,8 +32,6 @@ import vectorwing.farmersdelight.common.block.BuddingTomatoBlock;
 import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Iterator;
 
 import static vectorwing.farmersdelight.common.block.TomatoVineBlock.ROPELOGGED;
 
@@ -99,7 +94,9 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                 } else {
                     BlockPos abovePos = pos.above();
                     BlockState crop = level.getBlockState(abovePos);
-                    growCrop(crop, level, abovePos, farmland, random);
+                    if (!(crop.getBlock() instanceof AirBlock)) {
+                        growCrop(crop, level, abovePos, farmland, random);
+                    }
                     if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
                         if (!farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) ) {
                             Util.setDry(level, pos);
@@ -147,39 +144,63 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
     private static void growCrop(BlockState crop, ServerLevel level, BlockPos abovePos, BlockState farmland, RandomSource random) {
         ResourceLocation fertileKey = ForgeRegistries.BLOCKS.getKey(crop.getBlock());
         boolean fertile = ModFertility.isCropFertile(fertileKey != null ? fertileKey.toString() : null, level, abovePos);
+        boolean canGrow = !ModConfig.fertility.seasonalCrops || fertile || isGlassAboveBlock(level, abovePos);
+        Block aboveBlock = crop.getBlock();
         int growthAmount;
         BlockState newState;
-        if (crop.getBlock() instanceof CropBlock cropBlock) {
-            if (!cropBlock.isMaxAge(crop) && ModConfig.fertility.seasonalCrops && (fertile || isGlassAboveBlock(level, abovePos))) {
-                growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
-                newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + growthAmount);
-                level.setBlock(abovePos, newState, 2);
-                if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && cropBlock instanceof TomatoVineBlock tomatoVineBlock) {
-                    BlockPos aboveCropPos = abovePos.offset(0, 1, 0);
-                    BlockState tomatoVine = level.getBlockState(aboveCropPos);
-                    if (tomatoVine.getBlock() instanceof TomatoVineBlock aboveTomatoVineBlock) {
-                        if (!aboveTomatoVineBlock.isMaxAge(tomatoVine)) {
-                            newState = aboveTomatoVineBlock.getStateForAge(aboveTomatoVineBlock.getAge(crop) + 1).setValue(ROPELOGGED, true);
-                            level.setBlock(aboveCropPos, newState, 2);
+
+        if (canGrow) {
+            if (aboveBlock instanceof CropBlock cropBlock) {
+                if (!cropBlock.isMaxAge(crop)) {
+                    growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
+                    newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + growthAmount);
+                    level.setBlock(abovePos, newState, 2);
+                    if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && cropBlock instanceof TomatoVineBlock tomatoVineBlock) {
+                        BlockPos aboveCropPos = abovePos.offset(0, 1, 0);
+                        BlockState tomatoVine = level.getBlockState(aboveCropPos);
+                        if (tomatoVine.getBlock() instanceof TomatoVineBlock aboveTomatoVineBlock) {
+                            if (!aboveTomatoVineBlock.isMaxAge(tomatoVine)) {
+                                newState = aboveTomatoVineBlock.getStateForAge(aboveTomatoVineBlock.getAge(crop) + 1).setValue(ROPELOGGED, true);
+                                level.setBlock(aboveCropPos, newState, 2);
+                            }
+                        } else {
+                            tomatoVineBlock.attemptRopeClimb(level, abovePos, random);
                         }
-                    } else {
-                        tomatoVineBlock.attemptRopeClimb(level, abovePos, random);
                     }
                 }
-            }
-        } else if (crop.getBlock() instanceof CustomStemBlock stemBlock) {
-            int stemAge = stemBlock.getAge(crop);
-            if (ModConfig.fertility.seasonalCrops && (fertile || isGlassAboveBlock(level, abovePos))) {
-                if (stemAge == 7) {
-                    stemBlock.placeFruit(level, abovePos);
-                } else {
-                    growthAmount = getFertilizerIncrease(stemAge, 7, farmland);
-                    newState = stemBlock.getStateForAge(stemAge + growthAmount);
+            } else if (aboveBlock instanceof SweetBerryBushBlock sweetBerryBushBlock) {
+                int bushAge = level.getBlockState(abovePos).getValue(SweetBerryBushBlock.AGE);
+                if (bushAge < SweetBerryBushBlock.MAX_AGE) {
+                    growthAmount = getFertilizerIncrease(bushAge, SweetBerryBushBlock.MAX_AGE, farmland);
+                    newState = sweetBerryBushBlock.defaultBlockState().setValue(SweetBerryBushBlock.AGE, bushAge + growthAmount);
                     level.setBlock(abovePos, newState, 2);
                 }
+            } else if (DewDropFarmland.VINTAGEDELIGHT_INSTALLED && aboveBlock instanceof GearoBerryBushBlock gearoBerryBushBlock) {
+                int bushAge = level.getBlockState(abovePos).getValue(GearoBerryBushBlock.AGE);
+                if (bushAge < GearoBerryBushBlock.MAX_AGE) {
+                    growthAmount = getFertilizerIncrease(bushAge, GearoBerryBushBlock.MAX_AGE, farmland);
+                    newState = gearoBerryBushBlock.defaultBlockState().setValue(GearoBerryBushBlock.AGE, bushAge + growthAmount);
+                    level.setBlock(abovePos, newState, 2);
+                }
+            } else if (aboveBlock instanceof CustomStemBlock stemBlock) {
+                int stemAge = stemBlock.getAge(crop);
+                if (ModConfig.fertility.seasonalCrops) {
+                    if (stemAge == 7) {
+                        stemBlock.placeFruit(level, abovePos);
+                    } else {
+                        growthAmount = getFertilizerIncrease(stemAge, 7, farmland);
+                        newState = stemBlock.getStateForAge(stemAge + growthAmount);
+                        level.setBlock(abovePos, newState, 2);
+                    }
+                }
+            } else if (aboveBlock instanceof PitcherCropBlock pitcherCropBlock) {
+                int pitcherAge = level.getBlockState(abovePos).getValue(PitcherCropBlock.AGE);
+                growthAmount = getFertilizerIncrease(pitcherAge, PitcherCropBlock.MAX_AGE, farmland);
+                for (int i = 0; i < growthAmount; i++) {
+                    pitcherCropBlock.performBonemeal(level, random, abovePos, level.getBlockState(abovePos));
+                }
             }
-        } else if (crop.getBlock() instanceof BuddingTomatoBlock tomatoBlock) {
-            if (ModConfig.fertility.seasonalCrops && (fertile || isGlassAboveBlock(level, abovePos))) {
+            else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && aboveBlock instanceof BuddingTomatoBlock tomatoBlock) {
                 tomatoBlock.growPastMaxAge(crop, level, abovePos, random);
             }
         }

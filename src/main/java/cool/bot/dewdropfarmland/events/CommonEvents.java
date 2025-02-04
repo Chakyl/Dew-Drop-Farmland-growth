@@ -11,8 +11,8 @@ public class CommonEvents {
     public static class ModBus {
         @SubscribeEvent
         public static void onCommonSetup(final FMLCommonSetupEvent event) {
-            event.enqueueWork(() -> DewDropFarmland.FARMERS_DELIGHT_INSTALLED = ModList.get().isLoaded("farmers_delight")
-            );
+            event.enqueueWork(() -> DewDropFarmland.FARMERS_DELIGHT_INSTALLED = ModList.get().isLoaded("farmers_delight"));
+            event.enqueueWork(() -> DewDropFarmland.VINTAGEDELIGHT_INSTALLED = ModList.get().isLoaded("vintagedelight"));
         }
     }
 }

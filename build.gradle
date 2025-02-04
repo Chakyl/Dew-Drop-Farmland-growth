@@ -166,6 +166,8 @@ dependencies {
     implementation fg.deobf("maven.modrinth:serene-seasons:9.1.0.0")
     // Farmers Delight 1.2.6 - 1.20.1
     implementation fg.deobf("maven.modrinth:farmers-delight:1.20.1-1.2.6")
+    // VintageDelight 0.1.6
+    implementation fg.deobf("maven.modrinth:vintage-delight:0.1.6")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
