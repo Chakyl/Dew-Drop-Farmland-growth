@@ -34,5 +34,3 @@ Additional support for "Weird" crops that have additional logic is provided. If 
 
 *   [Farmer's Delight](https://www.curseforge.com/minecraft/mc-mods/farmers-delight) version 1.2.6 (Tomato Crop)
 *   [Vintage Delight](https://www.curseforge.com/minecraft/mc-mods/vintage-delight) version 1.6 (Gearo Berry Bush)
-
-## Support
