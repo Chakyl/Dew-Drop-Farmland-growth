@@ -21,8 +21,16 @@ To pair with the new growth system, six new fertilizers are added:
 - Low Quality Fertilizer - Blank farmland with a tag for Quality Food
 - High Quality Fertilizer - Theoretical stronger version of the above
 
-### Dependencies 
+## Dependencies (Required Versions)
 
-- [Serene Seasons](https://www.curseforge.com/minecraft/mc-mods/serene-seasons) version 9.0.0.46
-- [Farmer's Delight](https://www.curseforge.com/minecraft/mc-mods/farmers-delight) version 1.2.6 
+This mod has the following dependencies and has been tested with the following versions:
 
+*   [Bot's Lib](https://www.curseforge.com/minecraft/mc-mods/bots-lib) version 4.0 
+*   [Serene Seasons](https://www.curseforge.com/minecraft/mc-mods/serene-seasons) version 9.1.0.0
+
+## Mod Support 
+
+Additional support for "Weird" crops that have additional logic is provided. If you have a mod crop you would like supported, list them out in the comments and I'll do my best to accomodate.
+
+*   [Farmer's Delight](https://www.curseforge.com/minecraft/mc-mods/farmers-delight) version 1.2.6 (Tomato Crop)
+*   [Vintage Delight](https://www.curseforge.com/minecraft/mc-mods/vintage-delight) version 1.6 (Gearo Berry Bush)
