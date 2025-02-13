@@ -98,9 +98,11 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                         growCrop(crop, level, abovePos, farmland, random);
                     }
                     if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
-                        if (!farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) ) {
-                            Util.setDry(level, pos);
-                        } else if (crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getMaxAge() - cropBlock.getAge(crop) == 1 ) {
+                        boolean hydrated = Config.checkSprinklers && isNearSprinkler(level, pos);
+                        if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getMaxAge() - cropBlock.getAge(crop) != 1) {
+                            hydrated = true;
+                        }
+                        if (!hydrated) {
                             Util.setDry(level, pos);
                         }
                     }
@@ -206,6 +208,19 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
         }
     }
 
+    private static boolean inRange(Integer range, BlockPos pos, BlockPos center) {
+        return Math.abs(pos.getX() - center.getX()) < range + 1  || Math.abs(pos.getZ() - center.getZ()) < range + 1;
+    }
+
+    private static boolean isNearSprinkler(LevelReader level, BlockPos pPos) {
+        for(BlockPos blockpos : BlockPos.betweenClosed(pPos.offset(-4, 0, -4), pPos.offset(4, 1, 4))) {
+            if (inRange(1, blockpos, pPos) && level.getBlockState(blockpos).is(SturdyFarmlandBlockTags.SPRINKLER_TIER_1)) return true;
+            if (inRange(2, blockpos, pPos) && level.getBlockState(blockpos).is(SturdyFarmlandBlockTags.SPRINKLER_TIER_2)) return true;
+            if (inRange(3, blockpos, pPos) && level.getBlockState(blockpos).is(SturdyFarmlandBlockTags.SPRINKLER_TIER_3)) return true;
+            if (inRange(4, blockpos, pPos) && level.getBlockState(blockpos).is(SturdyFarmlandBlockTags.SPRINKLER_TIER_4)) return true;
+        }
+        return false;
+    }
     @Override
     public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {
         if (!level.isClientSide()) {

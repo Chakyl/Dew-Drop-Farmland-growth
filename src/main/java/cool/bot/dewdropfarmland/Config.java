@@ -49,6 +49,9 @@ public class Config
     private static final ForgeConfigSpec.BooleanValue SHOVEL_REVERTING = BUILDER
             .comment("If shovels can turn farmland to dirt when right clicking")
             .define("shovelReverting", true);
+    private static final ForgeConfigSpec.BooleanValue CHECK_SPRINKLERS = BUILDER
+            .comment("If crops should check for blocks with sprinkler tags to prevent drying")
+            .define("checkSprinklers", false);
 
 
 
@@ -67,6 +70,7 @@ public class Config
     public static boolean sturdyFarmland;
     public static boolean noRandomTick;
     public static boolean shovelReverting;
+    public static boolean checkSprinklers;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -84,5 +88,6 @@ public class Config
         sturdyFarmland = STURDY_FARMLAND.get();
         noRandomTick = NO_RANDOM_TICK.get();
         shovelReverting = SHOVEL_REVERTING.get();
+        checkSprinklers = CHECK_SPRINKLERS.get();
     }
 }
