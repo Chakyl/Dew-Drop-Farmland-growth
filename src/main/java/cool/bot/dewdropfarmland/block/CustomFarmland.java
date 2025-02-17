@@ -209,7 +209,7 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
     }
 
     private static boolean inRange(Integer range, BlockPos pos, BlockPos center) {
-        return Math.abs(pos.getX() - center.getX()) < range + 1  || Math.abs(pos.getZ() - center.getZ()) < range + 1;
+        return Math.abs(pos.getX() - center.getX()) < range + 1  && Math.abs(pos.getZ() - center.getZ()) < range + 1;
     }
 
     private static boolean isNearSprinkler(LevelReader level, BlockPos pPos) {
