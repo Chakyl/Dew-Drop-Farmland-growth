@@ -1,10 +1,12 @@
 package cool.bot.dewdropfarmland.block;
 
+
 import cool.bot.botslib.util.RNG;
 import cool.bot.dewdropfarmland.Config;
 import cool.bot.botslib.util.Util;
 import cool.bot.dewdropfarmland.DewDropFarmland;
 import cool.bot.dewdropfarmland.tag.SturdyFarmlandBlockTags;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.FlaxBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -16,13 +18,16 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.common.extensions.IForgeBlock;
-
+import com.baisylia.culturaldelights.block.ModBlocks;
+import com.baisylia.culturaldelights.block.custom.CornBlock;
+import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
 import net.ribs.vintagedelight.block.custom.GearoBerryBushBlock;
 import sereneseasons.init.ModConfig;
 import sereneseasons.init.ModFertility;
@@ -148,12 +153,12 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
         boolean fertile = ModFertility.isCropFertile(fertileKey != null ? fertileKey.toString() : null, level, abovePos);
         boolean canGrow = !ModConfig.fertility.seasonalCrops || fertile || isGlassAboveBlock(level, abovePos);
         Block aboveBlock = crop.getBlock();
+        BlockPos aboveAbovePos = abovePos.above();
         int growthAmount;
         BlockState newState;
-
         if (canGrow) {
             if (aboveBlock instanceof CropBlock cropBlock) {
-                if (!cropBlock.isMaxAge(crop)) {
+                if (!cropBlock.isMaxAge(crop) && !(DewDropFarmland.SUPPLEMENTARIES_INSTALLED && cropBlock instanceof FlaxBlock)) {
                     growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
                     newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + growthAmount);
                     level.setBlock(abovePos, newState, 2);
@@ -169,6 +174,9 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                             tomatoVineBlock.attemptRopeClimb(level, abovePos, random);
                         }
                     }
+                } else if (DewDropFarmland.SUPPLEMENTARIES_INSTALLED && cropBlock instanceof FlaxBlock flaxBlock) {
+                    growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
+                    flaxBlock.growCropBy(level, abovePos, crop, growthAmount);
                 }
             } else if (aboveBlock instanceof SweetBerryBushBlock sweetBerryBushBlock) {
                 int bushAge = level.getBlockState(abovePos).getValue(SweetBerryBushBlock.AGE);
@@ -183,6 +191,26 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                     growthAmount = getFertilizerIncrease(bushAge, GearoBerryBushBlock.MAX_AGE, farmland);
                     newState = gearoBerryBushBlock.defaultBlockState().setValue(GearoBerryBushBlock.AGE, bushAge + growthAmount);
                     level.setBlock(abovePos, newState, 2);
+                }
+            } else if (DewDropFarmland.CULTURAL_DELIGHTS_INSTALLED && aboveBlock instanceof CornBlock cornBlock) {
+                int cornAge = level.getBlockState(abovePos).getValue(cornBlock.AGE);
+                int cornMaxAge = cornBlock.getMaxAge();
+                if (cornAge < cornMaxAge) {
+                    growthAmount = getFertilizerIncrease(cornAge, cornMaxAge, farmland);
+                    newState = cornBlock.defaultBlockState().setValue(cornBlock.AGE, cornAge + growthAmount);
+                    level.setBlock(abovePos, newState, 2);
+                } else if (cornAge == cornMaxAge) {
+                    CornUpperBlock cornUpper = (CornUpperBlock) ModBlocks.CORN_UPPER.get();
+                    if (cornUpper.defaultBlockState().canSurvive(level, aboveAbovePos) && level.isEmptyBlock(aboveAbovePos)) {
+                        level.setBlockAndUpdate(aboveAbovePos, cornUpper.defaultBlockState());
+                        ForgeHooks.onCropsGrowPost(level, aboveAbovePos, level.getBlockState(aboveAbovePos));
+                    } else if (level.getBlockState(aboveAbovePos).getBlock() instanceof CornUpperBlock cornUpperBlock) {
+                        int aboveCornAge = level.getBlockState(aboveAbovePos).getValue(cornUpperBlock.CORN_AGE);
+                        if (aboveCornAge < cornUpperBlock.getMaxAge()) {
+                            newState = cornUpperBlock.defaultBlockState().setValue(cornUpperBlock.CORN_AGE, aboveCornAge + 1);
+                            level.setBlock(aboveAbovePos, newState, 2);
+                        }
+                    }
                 }
             } else if (aboveBlock instanceof CustomStemBlock stemBlock) {
                 int stemAge = stemBlock.getAge(crop);

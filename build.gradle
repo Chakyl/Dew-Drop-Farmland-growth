@@ -124,21 +124,13 @@ repositories {
     //flatDir {
     //     dir 'libs'
     //}
-
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = "Modrinth"
-                url = "https://api.modrinth.com/maven"
-            }
-        }
-        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
-        filter {
-            includeGroup "maven.modrinth"
+    maven {
+        // CurseForge
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
         }
     }
-
-
 }
 
 dependencies {
@@ -161,13 +153,19 @@ dependencies {
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
 
     //minecraftLibrary name: 'bots_lib-1.0', version: '1.0'
-    minecraftLibrary fg.deobf("maven.modrinth:bots-lib:4.0")
-    // Serene Seasons 1.20.1-9.0.0.46
-    implementation fg.deobf("maven.modrinth:serene-seasons:9.1.0.0")
-    // Farmers Delight 1.2.6 - 1.20.1
-    implementation fg.deobf("maven.modrinth:farmers-delight:1.20.1-1.2.6")
+    implementation fg.deobf("curse.maven:bots-lib-1062753:5550032")
+    // Serene Seasons 1.20.1-9.1.0.1
+    implementation fg.deobf("curse.maven:serene-seasons-291874:6229152")
+    // Farmers Delight 1.2.7 - 1.20.1
+    implementation fg.deobf("curse.maven:farmers-delight-398521:6154802")
     // VintageDelight 0.1.6
-    implementation fg.deobf("maven.modrinth:vintage-delight:0.1.6")
+    implementation fg.deobf("curse.maven:vintage-delight-949719:5847856")
+    // Supplementaries 3.1.18
+    implementation fg.deobf("curse.maven:supplementaries-412082:6228530")
+    // Moonlight lib 1.20-2.13.79
+    implementation fg.deobf("curse.maven:selene-499980:6323374")
+    // Cultural Delights 3.1.18
+    implementation fg.deobf("curse.maven:cultural-delights-574622:6314022")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

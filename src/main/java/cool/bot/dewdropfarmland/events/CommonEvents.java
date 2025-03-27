@@ -10,9 +10,12 @@ public class CommonEvents {
     @Mod.EventBusSubscriber(modid = DewDropFarmland.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModBus {
         @SubscribeEvent
+
         public static void onCommonSetup(final FMLCommonSetupEvent event) {
             event.enqueueWork(() -> DewDropFarmland.FARMERS_DELIGHT_INSTALLED = ModList.get().isLoaded("farmersdelight"));
             event.enqueueWork(() -> DewDropFarmland.VINTAGEDELIGHT_INSTALLED = ModList.get().isLoaded("vintagedelight"));
+            event.enqueueWork(() -> DewDropFarmland.SUPPLEMENTARIES_INSTALLED = ModList.get().isLoaded("supplementaries"));
+            event.enqueueWork(() -> DewDropFarmland.CULTURAL_DELIGHTS_INSTALLED = ModList.get().isLoaded("culturaldelights"));
         }
     }
 }
