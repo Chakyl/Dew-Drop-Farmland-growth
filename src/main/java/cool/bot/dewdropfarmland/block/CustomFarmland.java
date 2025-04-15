@@ -1,6 +1,7 @@
 package cool.bot.dewdropfarmland.block;
 
 
+import cool.bot.botslib.tag.DewDropBlockTags;
 import cool.bot.botslib.util.RNG;
 import cool.bot.dewdropfarmland.Config;
 import cool.bot.botslib.util.Util;
@@ -104,7 +105,7 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                     }
                     if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
                         boolean hydrated = Config.checkSprinklers && isNearSprinkler(level, pos);
-                        if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getMaxAge() - cropBlock.getAge(crop) != 1) {
+                        if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getAge(crop) < Math.floor((float) cropBlock.getMaxAge() / 2) ) {
                             hydrated = true;
                         }
                         if (!hydrated) {
@@ -140,8 +141,11 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
         return 1;
     }
     private static boolean isGlassAboveBlock(ServerLevel level, BlockPos cropPos) {
+        BlockState scannedBlock;
         for (int i = 0; i < 16; ++i) {
-            if (level.getBlockState(cropPos.offset(0, i + 1, 0)).is(ModTags.Blocks.GREENHOUSE_GLASS)) {
+            scannedBlock = level.getBlockState(cropPos.offset(0, i + 1, 0));
+            if (Config.strictGreenhouses && scannedBlock.is(DewDropBlockTags.WATERABLE)) break;
+            if (scannedBlock.is(ModTags.Blocks.GREENHOUSE_GLASS)) {
                 return true;
             }
         }

@@ -52,6 +52,10 @@ public class Config
     private static final ForgeConfigSpec.BooleanValue CHECK_SPRINKLERS = BUILDER
             .comment("If crops should check for blocks with sprinkler tags to prevent drying")
             .define("checkSprinklers", false);
+    private static final ForgeConfigSpec.BooleanValue STRICT_GREENHOUSES = BUILDER
+            .comment("Crops will not factor in greenhouse glass if a #dewdrop:waterable farmland is between them ")
+            .define("strictGreenhouses", false);
+
 
 
 
@@ -71,6 +75,7 @@ public class Config
     public static boolean noRandomTick;
     public static boolean shovelReverting;
     public static boolean checkSprinklers;
+    public static boolean strictGreenhouses;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -89,5 +94,6 @@ public class Config
         noRandomTick = NO_RANDOM_TICK.get();
         shovelReverting = SHOVEL_REVERTING.get();
         checkSprinklers = CHECK_SPRINKLERS.get();
+        strictGreenhouses = STRICT_GREENHOUSES.get();
     }
 }
