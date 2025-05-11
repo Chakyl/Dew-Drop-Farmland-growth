@@ -93,7 +93,8 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
 
             if (dayTime >= Config.dailyTimeMin && dayTime < Config.dailyTimeMin + 10) {
                 BlockState farmland = level.getBlockState(pos);
-                if (!Util.isMoistWaterable(level, pos)) {
+                boolean hydrated = Config.checkSprinklers && isNearSprinkler(level, pos);
+                if (!hydrated && !Util.isMoistWaterable(level, pos)) {
                     if (RNG.mc_ihundo(random, Config.dailyDecayChance)) {
                         level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
                     }
@@ -104,7 +105,9 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                         growCrop(crop, level, abovePos, farmland, random);
                     }
                     if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
-                        boolean hydrated = Config.checkSprinklers && isNearSprinkler(level, pos);
+                        if (hydrated && Util.isDryWaterable(level, pos)) {
+                            Util.setMoist(level, pos);
+                        }
                         if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getAge(crop) < Math.floor((float) cropBlock.getMaxAge() / 2) ) {
                             hydrated = true;
                         }
