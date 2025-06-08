@@ -126,28 +126,25 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
         }
     }
     private static int getFertilizerIncrease(int age, int maxAge, BlockState farmland) {
+        int increase = 1;
         if (age == 0) {
             if (farmland.is(SturdyFarmlandBlockTags.WEAK_FERTILIZED_FARMLAND)) {
-                return 2;
+                increase = 2;
             }
             if (farmland.is(SturdyFarmlandBlockTags.STRONG_FERTILIZED_FARMLAND)) {
-                return 3;
+                increase = 3;
             }
             if (farmland.is(SturdyFarmlandBlockTags.HYPER_FERTILIZED_FARMLAND)) {
-                if (maxAge > 3) {
-                    return 4;
-                } else {
-                    return 3;
-                }
+                increase = 4;
             }
         }
-        return 1;
+        return Math.min(increase, maxAge);
     }
     private static boolean isGlassAboveBlock(ServerLevel level, BlockPos cropPos) {
         BlockState scannedBlock;
         for (int i = 0; i < 16; ++i) {
             scannedBlock = level.getBlockState(cropPos.offset(0, i + 1, 0));
-            if (Config.strictGreenhouses && scannedBlock.is(DewDropBlockTags.WATERABLE)) break;
+            if (Config.strictGreenhouses && scannedBlock.is(DewDropBlockTags.WATERABLE)) return false;
             if (scannedBlock.is(ModTags.Blocks.GREENHOUSE_GLASS)) {
                 return true;
             }
