@@ -15,5 +15,7 @@
   "item.dew_drop_farmland_growth.bountiful_fertilizer": "Bountiful Fertilizer",
   "item.dew_drop_farmland_growth.low_quality_fertilizer": "Low Quality Fertilizer",
   "item.dew_drop_farmland_growth.high_quality_fertilizer": "High Quality Fertilizer",
-  "item.dew_drop_farmland_growth.pristine_quality_fertilizer": "Pristine Quality Fertilizer"
+  "item.dew_drop_farmland_growth.pristine_quality_fertilizer": "Pristine Quality Fertilizer",
+  "block.dew_drop_farmland_growth.tilled_sand": "Tilled Sand",
+  "block.dew_drop_farmland_growth.hyper_fertilized_sand": "Hyper Fertilized Sand"
 }

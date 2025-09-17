@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block",
+  "textures": {
+    "dirt": "minecraft:block/sand",
+    "top": "dew_drop_farmland_growth:block/pristine_quality_fertilized_sand"
+  }
+}

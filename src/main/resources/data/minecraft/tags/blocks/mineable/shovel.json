@@ -8,6 +8,8 @@
     "dew_drop_farmland_growth:bountiful_fertilized_farmland",
     "dew_drop_farmland_growth:low_quality_fertilized_farmland",
     "dew_drop_farmland_growth:high_quality_fertilized_farmland",
-    "dew_drop_farmland_growth:pristine_quality_fertilized_farmland"
+    "dew_drop_farmland_growth:pristine_quality_fertilized_farmland",
+    "dew_drop_farmland_growth:tilled_sand",
+    "dew_drop_farmland_growth:hyper_fertilized_sand"
   ]
 }

@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 
@@ -140,7 +141,8 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
+    // Apply Mixin AP
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
@@ -154,8 +156,9 @@ dependencies {
 
     //minecraftLibrary name: 'bots_lib-1.0', version: '1.0'
     implementation fg.deobf("curse.maven:bots-lib-1062753:5550032")
-    // Serene Seasons 1.20.1-9.1.0.1
-    implementation fg.deobf("curse.maven:serene-seasons-291874:6229152")
+    // Serene Seasons
+    implementation fg.deobf("curse.maven:serene-seasons-291874:6398227")
+    implementation fg.deobf("curse.maven:glitchcore-955399:5787839")
     // Farmers Delight 1.2.7 - 1.20.1
     implementation fg.deobf("curse.maven:farmers-delight-398521:6154802")
     // VintageDelight 0.1.6
@@ -166,6 +169,10 @@ dependencies {
     implementation fg.deobf("curse.maven:selene-499980:6323374")
     // Cultural Delights 3.1.18
     implementation fg.deobf("curse.maven:cultural-delights-574622:6314022")
+    // Windswept
+    implementation fg.deobf("curse.maven:windsweptmod-636321:7003870")
+    // Vinery
+    implementation fg.deobf("curse.maven:lets-do-vinery-704465:6965751")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -210,4 +217,9 @@ tasks.named('jar', Jar).configure {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+mixin {
+    // MixinGradle Settings
+    add sourceSets.main, 'mixins.dewdropfarmland.refmap.json'
+    config 'mixins.dewdropfarmland.json'
 }

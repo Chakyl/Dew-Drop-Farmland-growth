@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/sand",
+    "side": "minecraft:block/sand",
+    "top": "dew_drop_farmland_growth:block/hyper_fertilized_sand"
+  }
+}

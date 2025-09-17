@@ -1,21 +1,29 @@
-package cool.bot.dewdropfarmland.block;
+package cool.bot.dewdropfarmland.events;
 
 import cool.bot.dewdropfarmland.Config;
 import cool.bot.botslib.tag.DewDropBlockTags;
 import cool.bot.botslib.util.Util;
+import cool.bot.dewdropfarmland.registry.ModElements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DirtPathBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -103,6 +111,28 @@ public class FarmlandEventHandler {
             return;
         }
         Util.setMoist(level, pos);
+
+    }
+
+    @SubscribeEvent
+    public static void interactSandEvent(PlayerInteractEvent event) {
+
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState state = level.getBlockState(pos);
+        Player player = event.getEntity();
+        ItemStack stack = player.getItemInHand(event.getHand());
+
+        if (state.is(Blocks.SAND) && stack.getItem() instanceof HoeItem) {
+            level.setBlockAndUpdate(pos, ModElements.TILLED_SAND.get().defaultBlockState());
+            level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+            player.swing(event.getHand());
+            if (event.getLevel().isClientSide) {
+                player.getItemInHand(event.getHand()).hurtAndBreak(1, player, (pPlayer) -> pPlayer.broadcastBreakEvent(event.getHand()));
+
+            }
+
+        }
 
     }
 

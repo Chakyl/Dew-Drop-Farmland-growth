@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "package": "cool.bot.dewdropfarmland.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.dewdropfarmland.refmap.json",
+  "mixins": [
+    "LatticeBlockMixin",
+    "PaleStemBlockMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

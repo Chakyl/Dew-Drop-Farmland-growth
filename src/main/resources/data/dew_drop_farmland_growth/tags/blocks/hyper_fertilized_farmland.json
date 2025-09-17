@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "dew_drop_farmland_growth:hyper_fertilized_farmland"
+    "dew_drop_farmland_growth:hyper_fertilized_farmland",
+    "dew_drop_farmland_growth:hyper_fertilized_sand"
   ]
 }
