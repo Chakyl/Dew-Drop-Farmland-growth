@@ -51,7 +51,7 @@ public class Config
             .define("shovelReverting", true);
     private static final ForgeConfigSpec.BooleanValue CHECK_SPRINKLERS = BUILDER
             .comment("If crops should check for blocks with sprinkler tags to prevent drying")
-            .define("checkSprinklers", false);
+            .define("checkSprinklers", true);
     private static final ForgeConfigSpec.BooleanValue STRICT_GREENHOUSES = BUILDER
             .comment("Crops will not factor in greenhouse glass if a #dewdrop:waterable farmland is between them ")
             .define("strictGreenhouses", false);

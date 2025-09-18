@@ -5,7 +5,8 @@
   "refmap": "mixins.dewdropfarmland.refmap.json",
   "mixins": [
     "LatticeBlockMixin",
-    "PaleStemBlockMixin"
+    "PaleStemBlockMixin",
+    "RandomTickMixin"
   ],
   "client": [],
   "injectors": {

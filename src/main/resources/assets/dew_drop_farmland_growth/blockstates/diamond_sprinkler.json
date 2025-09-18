@@ -1,0 +1,11 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "dew_drop_farmland_growth:block/diamond_sprinkler" }
+    },
+    {
+      "when": { "sticklogged": true },
+      "apply": { "model": "dew_drop_farmland_growth:block/sprinkler_stick" }
+    }
+  ]
+}

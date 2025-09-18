@@ -19,6 +19,9 @@ public class SturdyFarmlandBlockTags {
     public static final TagKey<Block> SPRINKLER_TIER_3 = tag("sprinkler_tier_3");
     public static final TagKey<Block> SPRINKLER_TIER_4 = tag("sprinkler_tier_4");
 
+
+    public static final TagKey<Block> CANCEL_RANDOM_TICK = tag("cancel_random_tick");
+
     public static TagKey<Block> tag(String name) {
         return BlockTags.create(new ResourceLocation("dew_drop_farmland_growth", name));
     }

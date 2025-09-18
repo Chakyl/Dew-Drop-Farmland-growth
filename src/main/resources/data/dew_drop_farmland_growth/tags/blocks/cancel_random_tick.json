@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:crops",
+    "minecraft:sugar_cane",
+    "minecraft:cactus",
+    { "id": "farmersdelight:rice", "required": false },
+    { "id": "vintagedelight:gearo_berry_bush", "required": false },
+    { "id": "vinery:grapevine_stem", "required": false },
+    { "id": "vinery:oak_lattice", "required": false },
+    { "id": "vinery:spruce_lattice", "required": false },
+    { "id": "vinery:birch_lattice", "required": false },
+    { "id": "vinery:jungle_lattice", "required": false },
+    { "id": "vinery:acacia_lattice", "required": false },
+    { "id": "vinery:dark_oak_lattice", "required": false },
+    { "id": "vinery:mangrove_lattice", "required": false },
+    { "id": "vinery:bamboo_lattice", "required": false },
+    { "id": "vinery:cherry_lattice", "required": false },
+    { "id": "vinery:dark_cherry_lattice", "required": false },
+    { "id": "windswept:wild_berry_bush", "required": false }
+  ]
+}

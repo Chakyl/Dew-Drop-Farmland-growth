@@ -17,5 +17,9 @@
   "item.dew_drop_farmland_growth.high_quality_fertilizer": "High Quality Fertilizer",
   "item.dew_drop_farmland_growth.pristine_quality_fertilizer": "Pristine Quality Fertilizer",
   "block.dew_drop_farmland_growth.tilled_sand": "Tilled Sand",
-  "block.dew_drop_farmland_growth.hyper_fertilized_sand": "Hyper Fertilized Sand"
+  "block.dew_drop_farmland_growth.hyper_fertilized_sand": "Hyper Fertilized Sand",
+  "block.dew_drop_farmland_growth.iron_sprinkler": "Iron Sprinkler",
+  "block.dew_drop_farmland_growth.gold_sprinkler": "Gold Sprinkler",
+  "block.dew_drop_farmland_growth.diamond_sprinkler": "Diamond Sprinkler",
+  "block.dew_drop_farmland_growth.netherite_sprinkler": "Netherite Sprinkler"
 }

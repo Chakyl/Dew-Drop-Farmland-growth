@@ -1,6 +1,5 @@
 package cool.bot.dewdropfarmland.utils;
 
-import com.baisylia.culturaldelights.block.ModBlocks;
 import com.baisylia.culturaldelights.block.custom.CornBlock;
 import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
 import com.rosemods.windswept.common.block.WildBerryBushBlock;
@@ -15,7 +14,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.ribs.vintagedelight.block.custom.GearoBerryBushBlock;
@@ -23,15 +21,17 @@ import net.satisfy.vinery.core.block.GrapeBush;
 import sereneseasons.init.ModConfig;
 import sereneseasons.init.ModFertility;
 import vectorwing.farmersdelight.common.block.BuddingTomatoBlock;
+import vectorwing.farmersdelight.common.block.RiceBlock;
 import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 
+import static cool.bot.dewdropfarmland.utils.ModGrowthCompat.*;
 import static cool.bot.dewdropfarmland.utils.SeasonUtils.isGlassAboveBlock;
 import static net.minecraft.world.level.block.CropBlock.AGE;
 import static vectorwing.farmersdelight.common.block.TomatoVineBlock.ROPELOGGED;
 
 public class CropHandlerUtils {
 
-    private static int getFertilizerIncrease(int age, int maxAge, BlockState farmland) {
+    public static int getFertilizerIncrease(int age, int maxAge, BlockState farmland) {
         int increase = 1;
         if (age == 0) {
             if (farmland.is(SturdyFarmlandBlockTags.WEAK_FERTILIZED_FARMLAND)) {
@@ -47,25 +47,6 @@ public class CropHandlerUtils {
         return Math.min(increase, maxAge);
     }
 
-    public static void growCulturalDelightCorn(ServerLevel level, Block cornBlock, BlockPos pos, IntegerProperty ageProperty, IntegerProperty upperAgeProperty, BlockState farmland) {
-        BlockPos aboveAbovePos = pos.above();
-        int cornAge = level.getBlockState(pos).getValue(ageProperty);
-        int cornMaxAge = ((CornBlock) cornBlock).getMaxAge();
-        if (cornAge < cornMaxAge) {
-            level.setBlock(pos, cornBlock.defaultBlockState().setValue(ageProperty, cornAge + getFertilizerIncrease(cornAge, cornMaxAge, farmland)), 2);
-        } else if (cornAge == cornMaxAge) {
-            CornUpperBlock cornUpper = (CornUpperBlock) ModBlocks.CORN_UPPER.get();
-            if (cornUpper.defaultBlockState().canSurvive(level, aboveAbovePos) && level.isEmptyBlock(aboveAbovePos)) {
-                level.setBlockAndUpdate(aboveAbovePos, cornUpper.defaultBlockState());
-                ForgeHooks.onCropsGrowPost(level, aboveAbovePos, level.getBlockState(aboveAbovePos));
-            } else if (level.getBlockState(aboveAbovePos).getBlock() instanceof CornUpperBlock cornUpperBlock) {
-                int aboveCornAge = level.getBlockState(aboveAbovePos).getValue(upperAgeProperty);
-                if (aboveCornAge < cornUpperBlock.getMaxAge()) {
-                    level.setBlock(aboveAbovePos, cornUpperBlock.defaultBlockState().setValue(upperAgeProperty, aboveCornAge + 1), 2);
-                }
-            }
-        }
-    }
 
     public static void growBush(ServerLevel level, Block bushBlock, BlockPos pos, int maxAge, BlockState farmland) {
         int bushAge = level.getBlockState(pos).getValue(AGE);
@@ -99,15 +80,18 @@ public class CropHandlerUtils {
             }
         } else if (aboveBlock instanceof SweetBerryBushBlock sweetBerryBushBlock) {
             growBush(level, sweetBerryBushBlock, abovePos, SweetBerryBushBlock.MAX_AGE, farmland);
-        }else if (DewDropFarmland.WINDSWEPT_INSTALLED && aboveBlock instanceof WildBerryBushBlock) {
-            growBush(level, aboveBlock, abovePos, 3, farmland);
-        }else if (DewDropFarmland.VINERY_INSTALLED && aboveBlock instanceof GrapeBush) {
-            growBush(level, aboveBlock, abovePos, 3, farmland);
-        }else if (DewDropFarmland.VINTAGEDELIGHT_INSTALLED && aboveBlock instanceof GearoBerryBushBlock) {
-            growBush(level, aboveBlock, abovePos, GearoBerryBushBlock.MAX_AGE, farmland);
-        }else if (DewDropFarmland.CULTURAL_DELIGHTS_INSTALLED && aboveBlock instanceof CornBlock) {
+        } else if (DewDropFarmland.WINDSWEPT_INSTALLED && aboveBlock instanceof WildBerryBushBlock) {
+            growWildBerryBush(level, aboveBlock, abovePos, farmland);
+        } else if (DewDropFarmland.VINERY_INSTALLED && aboveBlock instanceof GrapeBush) {
+            growGrapeBush(level, aboveBlock, abovePos, farmland);
+        } else if (DewDropFarmland.VINTAGEDELIGHT_INSTALLED && aboveBlock instanceof GearoBerryBushBlock) {
+            growGearoBerryBush(level, aboveBlock, abovePos, farmland);
+        } else if (DewDropFarmland.CULTURAL_DELIGHTS_INSTALLED && aboveBlock instanceof CornBlock) {
             growCulturalDelightCorn(level, aboveBlock, abovePos, CornBlock.AGE, CornUpperBlock.AGE, farmland);
-        }else if (aboveBlock instanceof CustomStemBlock stemBlock) {
+        } else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && aboveBlock instanceof RiceBlock) {
+            growFarmersDelightRice(level, aboveBlock, abovePos, farmland);
+
+        } else if (aboveBlock instanceof CustomStemBlock stemBlock) {
             int stemAge = stemBlock.getAge(crop);
             if (ModConfig.fertility.seasonalCrops) {
                 if (stemAge == 7) {

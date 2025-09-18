@@ -1,0 +1,8 @@
+{
+  "parent": "dew_drop_farmland_growth:block/iron_sprinkler",
+  "texture_size": [32, 32],
+  "textures": {
+    "0": "dew_drop_farmland_growth:block/diamond_sprinkler",
+    "particle": "dew_drop_farmland_growth:block/diamond_sprinkler"
+  }
+}
