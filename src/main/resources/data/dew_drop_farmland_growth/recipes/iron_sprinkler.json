@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+      "I": {
+        "item": "minecraft:iron_block"
+      },
+      "C": {
+        "item": "minecraft:copper_block"
+      },
+      "L": {
+        "tag": "minecraft:logs"
+      }
+    },
+    "pattern": [
+      " C ",
+      "ILI",
+      " L "
+    ],
+    "result": {
+      "item": "dew_drop_farmland_growth:iron_sprinkler",
+      "count": 1
+    },
+    "show_notification": true
+  }

@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+      "d": {
+        "item": "minecraft:diamond"
+      },
+      "S": {
+        "item": "dew_drop_farmland_growth:gold_sprinkler"
+      }
+    },
+    "pattern": [
+      "ddd",
+      "dSd",
+      "ddd"
+    ],
+    "result": {
+      "item": "dew_drop_farmland_growth:diamond_sprinkler",
+      "count": 1
+    },
+    "show_notification": true
+  }

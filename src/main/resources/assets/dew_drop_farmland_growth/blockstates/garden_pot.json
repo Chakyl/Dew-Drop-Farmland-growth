@@ -1,0 +1,71 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "0" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "1" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "2" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "3" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "4" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "5" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "6" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt" }
+    },
+    {
+      "when": { "deluxe": false, "moisture": "7" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_dirt_moist" }
+    },
+        {
+      "when": { "deluxe": true, "moisture": "0" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "1" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "2" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "3" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "4" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "5" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "6" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt" }
+    },
+    {
+      "when": { "deluxe": true, "moisture": "7" },
+      "apply": { "model": "dew_drop_farmland_growth:block/garden_pot_deluxe_dirt_moist" }
+    }
+  ]
+}

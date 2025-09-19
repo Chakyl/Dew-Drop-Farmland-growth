@@ -129,7 +129,6 @@ public class FarmlandEventHandler {
             player.swing(event.getHand());
             if (event.getLevel().isClientSide) {
                 player.getItemInHand(event.getHand()).hurtAndBreak(1, player, (pPlayer) -> pPlayer.broadcastBreakEvent(event.getHand()));
-
             }
 
         }

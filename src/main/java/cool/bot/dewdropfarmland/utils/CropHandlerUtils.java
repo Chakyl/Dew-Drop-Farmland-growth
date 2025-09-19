@@ -164,11 +164,15 @@ public class CropHandlerUtils {
     }
 
     public static void growCrop(BlockState crop, ServerLevel level, BlockPos abovePos, BlockState farmland, RandomSource random, Boolean sandy) {
+        growCrop(crop, level, abovePos, farmland, random, sandy, false);
+    }
+
+    public static void growCrop(BlockState crop, ServerLevel level, BlockPos abovePos, BlockState farmland, RandomSource random, Boolean sandy, Boolean gardenPot) {
         boolean canGrow = true;
         if (DewDropFarmland.SERENE_SEASONS_INSTALLED) {
             ResourceLocation fertileKey = ForgeRegistries.BLOCKS.getKey(crop.getBlock());
             boolean fertile = ModFertility.isCropFertile(fertileKey != null ? fertileKey.toString() : null, level, abovePos);
-            canGrow = (!ModConfig.fertility.seasonalCrops || fertile || isGlassAboveBlock(level, abovePos));
+            canGrow = (!ModConfig.fertility.seasonalCrops || fertile || isGlassAboveBlock(level, abovePos) || (gardenPot && !level.canSeeSky(abovePos.above())));
         }
         if (canGrow) {
             if (sandy) {

@@ -8,6 +8,9 @@
     "dew_drop_farmland_growth:bountiful_fertilized_farmland",
     "dew_drop_farmland_growth:low_quality_fertilized_farmland",
     "dew_drop_farmland_growth:high_quality_fertilized_farmland",
-    "dew_drop_farmland_growth:pristine_quality_fertilized_farmland"
+    "dew_drop_farmland_growth:pristine_quality_fertilized_farmland",
+    "dew_drop_farmland_growth:garden_pot",
+    "dew_drop_farmland_growth:rope_hanging_garden_pot",
+    "dew_drop_farmland_growth:iron_hanging_garden_pot"
   ]
 }

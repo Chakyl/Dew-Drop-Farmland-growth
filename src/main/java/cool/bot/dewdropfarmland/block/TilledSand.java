@@ -30,7 +30,6 @@ public class TilledSand extends FallingBlock implements IForgeBlock {
         super(properties);
     }
 
-    @Nullable
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;

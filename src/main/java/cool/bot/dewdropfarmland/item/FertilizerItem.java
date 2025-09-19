@@ -1,5 +1,6 @@
 package cool.bot.dewdropfarmland.item;
 
+import cool.bot.dewdropfarmland.block.GardenPotBlock;
 import cool.bot.dewdropfarmland.registry.ModElements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +35,7 @@ public class FertilizerItem extends Item {
             boolean targetingCrop = state.is(BlockTags.CROPS) && level.getBlockState(posClicked.below()).is(Blocks.FARMLAND);
 
 
-            if (level.getBlockState(posClicked).is(Blocks.FARMLAND) || level.getBlockState(posClicked).is(ModElements.TILLED_SAND.get()) || targetingCrop) {
+            if (level.getBlockState(posClicked).is(Blocks.FARMLAND) || level.getBlockState(posClicked).is(ModElements.TILLED_SAND.get()) || level.getBlockState(posClicked).getBlock() instanceof GardenPotBlock || targetingCrop) {
                 if (targetingCrop) {
                     posClicked = posClicked.below();
                     state = level.getBlockState(posClicked);
@@ -45,7 +46,13 @@ public class FertilizerItem extends Item {
                     } else {
                         return InteractionResult.FAIL;
                     }
-                } else {
+                }else if (level.getBlockState(posClicked).getBlock() instanceof GardenPotBlock){
+                    if (stack.is(ModElements.DELUXE_HYDRATING_FERTILIZER.get())) {
+                        level.setBlock(posClicked, level.getBlockState(posClicked).setValue(GardenPotBlock.DELUXE, true), 3);
+                    } else {
+                        return InteractionResult.FAIL;
+                    }
+                }else {
                     if (stack.is(ModElements.WEAK_FERTILIZER.get())) {
                         level.setBlock(posClicked, moisturizer(ModElements.WEAK_FERTILIZED_FARMLAND, state), 3);
                     } else if (stack.is(ModElements.STRONG_FERTILIZER.get())) {
@@ -54,7 +61,9 @@ public class FertilizerItem extends Item {
                         level.setBlock(posClicked, moisturizer(ModElements.HYPER_FERTILIZED_FARMLAND, state), 3);
                     } else if (stack.is(ModElements.HYDRATING_FERTILIZER.get())) {
                         level.setBlock(posClicked, moisturizer(ModElements.HYDRATING_FARMLAND, state), 3);
-                    } else if (stack.is(ModElements.BOUNTIFUL_FERTILIZER.get())) {
+                    }else if (stack.is(ModElements.DELUXE_HYDRATING_FERTILIZER.get())) {
+                        level.setBlock(posClicked, moisturizer(ModElements.DELUXE_HYDRATING_FARMLAND, state), 3);
+                    }  else if (stack.is(ModElements.BOUNTIFUL_FERTILIZER.get())) {
                         level.setBlock(posClicked, moisturizer(ModElements.BOUNTIFUL_FERTILIZED_FARMLAND, state), 3);
                     } else if (stack.is(ModElements.LOW_QUALITY_FERTILIZER.get())) {
                         level.setBlock(posClicked, moisturizer(ModElements.LOW_QUALITY_FERTILIZED_FARMLAND, state), 3);

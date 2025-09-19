@@ -1,10 +1,7 @@
 package cool.bot.dewdropfarmland.registry;
 
 import cool.bot.dewdropfarmland.DewDropFarmland;
-import cool.bot.dewdropfarmland.block.CustomFarmland;
-import cool.bot.dewdropfarmland.block.CustomStemBlock;
-import cool.bot.dewdropfarmland.block.SprinklerBlock;
-import cool.bot.dewdropfarmland.block.TilledSand;
+import cool.bot.dewdropfarmland.block.*;
 import cool.bot.dewdropfarmland.item.FertilizerItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -45,6 +42,8 @@ public class ModElements {
             () -> new CustomFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND)));
     public static final RegistryObject<Block> HYDRATING_FARMLAND = registerModBlock("hydrating_farmland",
             () -> new CustomFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND)));
+    public static final RegistryObject<Block> DELUXE_HYDRATING_FARMLAND = registerModBlock("deluxe_hydrating_farmland",
+            () -> new CustomFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND)));
     public static final RegistryObject<Block> BOUNTIFUL_FERTILIZED_FARMLAND = registerModBlock("bountiful_fertilized_farmland",
             () -> new CustomFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND)));
     public static final RegistryObject<Block> LOW_QUALITY_FERTILIZED_FARMLAND = registerModBlock("low_quality_fertilized_farmland",
@@ -65,6 +64,13 @@ public class ModElements {
 //    public static final RegistryObject<Block> PRISTINE_QUALITY_FERTILIZED_SAND = registerModBlock("pristine_quality_fertilized_sand",
 //            () -> new TilledSand(BlockBehaviour.Properties.copy(Blocks.SAND)));
 
+    public static final RegistryObject<Block> GARDEN_POT = registerModBlock("garden_pot",
+            () -> new GardenPotBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> IRON_HANGING_GARDEN_POT = registerModBlock("iron_hanging_garden_pot",
+            () -> new GardenPotBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> ROPE_HANGING_GARDEN_POT = registerModBlock("rope_hanging_garden_pot",
+            () -> new GardenPotBlock(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL)));
+
     public static final RegistryObject<Block> IRON_SPRINKLER = registerModBlock("iron_sprinkler",
             () -> new SprinklerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> GOLD_SPRINKLER = registerModBlock("gold_sprinkler",
@@ -83,6 +89,8 @@ public class ModElements {
             () -> new BlockItem(HYPER_FERTILIZED_FARMLAND.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> HYDRATING_FARMLAND_ITEM = registerItem("hydrating_farmland",
             () -> new BlockItem(HYDRATING_FARMLAND.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DELUXE_HYDRATING_FARMLAND_ITEM = registerItem("deluxe_hydrating_farmland",
+            () -> new BlockItem(DELUXE_HYDRATING_FARMLAND.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> BOUNTIFUL_FERTILIZED_FARMLAND_ITEM = registerItem("bountiful_fertilized_farmland",
             () -> new BlockItem(BOUNTIFUL_FERTILIZED_FARMLAND.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> LOW_QUALITY_FERTILIZED_ITEM = registerItem("low_quality_fertilized_farmland",
@@ -102,6 +110,9 @@ public class ModElements {
 //            () -> new BlockItem(HIGH_QUALITY_FERTILIZED_SAND.get(), new Item.Properties()));
 //    public static final RegistryObject<BlockItem> PRISTINE_QUALITY_FERTILIZED_SAND_ITEM = registerItem("pristine_quality_fertilized_sand",
 //            () -> new BlockItem(PRISTINE_QUALITY_FERTILIZED_SAND.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> GARDEN_POT_ITEM = registerItem("garden_pot",
+            () -> new BlockItem(GARDEN_POT.get(), new Item.Properties()));
+
     public static final RegistryObject<BlockItem> IRON_SPRINKLER_ITEM = registerItem("iron_sprinkler",
             () -> new BlockItem(IRON_SPRINKLER.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> GOLD_SPRINKLER_ITEM = registerItem("gold_sprinkler",
@@ -115,6 +126,7 @@ public class ModElements {
     public static final RegistryObject<Item> STRONG_FERTILIZER = registerItem("strong_fertilizer", () -> new FertilizerItem(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(64)));
     public static final RegistryObject<Item> HYPER_FERTILIZER = registerItem("hyper_fertilizer", () -> new FertilizerItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(64)));
     public static final RegistryObject<Item> HYDRATING_FERTILIZER = registerItem("hydrating_fertilizer", () -> new FertilizerItem(new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> DELUXE_HYDRATING_FERTILIZER = registerItem("deluxe_hydrating_fertilizer", () -> new FertilizerItem(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> BOUNTIFUL_FERTILIZER = registerItem("bountiful_fertilizer", () -> new FertilizerItem(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> LOW_QUALITY_FERTILIZER = registerItem("low_quality_fertilizer", () -> new FertilizerItem(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> HIGH_QUALITY_FERTILIZER = registerItem("high_quality_fertilizer", () -> new FertilizerItem(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(64)));

@@ -67,48 +67,47 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (Config.rainWatering || Config.dailyReset) {
 
-            level.scheduleTick(pos, this, 10);
+        level.scheduleTick(pos, this, 10);
 
-            if (level.isRainingAt(pos.above()) && Config.rainWatering) Util.setMoist(level, pos);
+        if (level.isRainingAt(pos.above()) && Config.rainWatering) Util.setMoist(level, pos);
 
-            if (level.getFluidState(pos.above()).getType() == Fluids.WATER) Util.setMoist(level, pos);
+        if (level.getFluidState(pos.above()).getType() == Fluids.WATER) Util.setMoist(level, pos);
 
-            if (!Config.dailyReset || !level.getGameRules().getRule(GameRules.RULE_DAYLIGHT).get()) {
-                return;
-            }
-            long dayTime = level.getDayTime() % 24000;
-            // check before rain
+        if (!Config.dailyReset || !level.getGameRules().getRule(GameRules.RULE_DAYLIGHT).get()) {
+            return;
+        }
+        long dayTime = level.getDayTime() % 24000;
+        // check before rain
 
-            if (dayTime >= Config.dailyTimeMin && dayTime < Config.dailyTimeMin + 10) {
-                BlockState farmland = level.getBlockState(pos);
-                boolean hydrated = Config.checkSprinklers && isNearSprinkler(level, pos);
-                if (!hydrated && !Util.isMoistWaterable(level, pos)) {
-                    if (RNG.mc_ihundo(random, Config.dailyDecayChance)) {
-                        level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
+        if (dayTime >= Config.dailyTimeMin && dayTime < Config.dailyTimeMin + 10) {
+            BlockState farmland = level.getBlockState(pos);
+            boolean hydrated = Config.checkSprinklers && isNearSprinkler(level, pos);
+            if (!hydrated && !Util.isMoistWaterable(level, pos)) {
+                if (RNG.mc_ihundo(random, Config.dailyDecayChance)) {
+                    level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
+                }
+            } else {
+                BlockPos abovePos = pos.above();
+                BlockState crop = level.getBlockState(abovePos);
+                if (!(crop.getBlock() instanceof AirBlock)) {
+                    growCrop(crop, level, abovePos, farmland, random, false);
+                }
+                if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
+                    if (hydrated && Util.isDryWaterable(level, pos)) {
+                        Util.setMoist(level, pos);
                     }
-                } else {
-                    BlockPos abovePos = pos.above();
-                    BlockState crop = level.getBlockState(abovePos);
-                    if (!(crop.getBlock() instanceof AirBlock)) {
-                        growCrop(crop, level, abovePos, farmland, random, false);
+                    if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getAge(crop) < Math.floor((float) cropBlock.getMaxAge() / 2)) {
+                        hydrated = true;
                     }
-                    if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
-                        if (hydrated && Util.isDryWaterable(level, pos)) {
-                            Util.setMoist(level, pos);
-                        }
-                        if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getAge(crop) < Math.floor((float) cropBlock.getMaxAge() / 2)) {
-                            hydrated = true;
-                        }
-                        if (!hydrated) {
-                            Util.setDry(level, pos);
-                        }
+                    if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND)) {
+                        hydrated = true;
                     }
-
+                    if (!hydrated) {
+                        Util.setDry(level, pos);
+                    }
                 }
             }
-
         }
 
         if (!Config.sturdyFarmland) {

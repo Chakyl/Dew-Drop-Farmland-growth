@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+      "G": {
+        "item": "minecraft:gold_block"
+      },
+      "S": {
+        "item": "dew_drop_farmland_growth:iron_sprinkler"
+      }
+    },
+    "pattern": [
+      " G ",
+      "GSG",
+      " G "
+    ],
+    "result": {
+      "item": "dew_drop_farmland_growth:gold_sprinkler",
+      "count": 1
+    },
+    "show_notification": true
+  }
