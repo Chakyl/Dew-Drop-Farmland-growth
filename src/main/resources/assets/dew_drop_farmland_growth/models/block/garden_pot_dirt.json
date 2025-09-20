@@ -1,12 +1,13 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "minecraft:block/coarse_dirt"
+		"2": "block/coarse_dirt"
 	},
 	"elements": [
 		{
-			"from": [2, 15, 2],
-			"to": [14, 15, 14],
+			"from": [1.95, 15, 1.95],
+			"to": [14.05, 15, 14.05],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 13, 13]},
 			"faces": {
 				"north": {"uv": [0, 0, 3.5, 0.5], "texture": "#2"},

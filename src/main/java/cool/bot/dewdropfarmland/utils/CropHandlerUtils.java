@@ -93,14 +93,12 @@ public class CropHandlerUtils {
 
         } else if (aboveBlock instanceof CustomStemBlock stemBlock) {
             int stemAge = stemBlock.getAge(crop);
-            if (ModConfig.fertility.seasonalCrops) {
-                if (stemAge == 7) {
-                    stemBlock.placeFruit(level, abovePos);
-                } else {
-                    growthAmount = getFertilizerIncrease(stemAge, 7, farmland);
-                    newState = stemBlock.getStateForAge(stemAge + growthAmount);
-                    level.setBlock(abovePos, newState, 2);
-                }
+            if (stemAge == 7) {
+                stemBlock.placeFruit(level, abovePos);
+            } else {
+                growthAmount = getFertilizerIncrease(stemAge, 7, farmland);
+                newState = stemBlock.getStateForAge(stemAge + growthAmount);
+                level.setBlock(abovePos, newState, 2);
             }
         } else if (aboveBlock instanceof PitcherCropBlock pitcherCropBlock) {
             int pitcherAge = level.getBlockState(abovePos).getValue(PitcherCropBlock.AGE);
@@ -161,6 +159,16 @@ public class CropHandlerUtils {
                 return true;
         }
         return false;
+    }
+
+    public static void growCropsInRadius(ServerLevel level, BlockPos centerPos, RandomSource random, int radius) {
+        for (BlockPos pos : BlockPos.betweenClosed(new BlockPos(centerPos.getX() - radius, centerPos.getY(), centerPos.getZ() - radius), new BlockPos(
+                centerPos.getX() + radius,
+                centerPos.getY(),
+                centerPos.getZ() + radius)
+        )) {
+            growCrop(level.getBlockState(pos), level, pos, level.getBlockState(centerPos.below()), random, false);
+        }
     }
 
     public static void growCrop(BlockState crop, ServerLevel level, BlockPos abovePos, BlockState farmland, RandomSource random, Boolean sandy) {

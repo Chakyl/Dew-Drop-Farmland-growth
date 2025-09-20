@@ -4,25 +4,19 @@ package cool.bot.dewdropfarmland.block;
 import cool.bot.botslib.util.RNG;
 import cool.bot.botslib.util.Util;
 import cool.bot.dewdropfarmland.Config;
-import cool.bot.dewdropfarmland.registry.ModElements;
-import cool.bot.dewdropfarmland.tag.SturdyFarmlandBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.StandingAndWallBlockItem;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -96,9 +90,7 @@ public class GardenPotBlock extends FarmBlock implements IForgeBlock {
                     growCrop(crop, level, abovePos, farmland, random, false, true);
                 }
                 if (RNG.mc_ihundo(random, Config.dailyDryChance)) {
-                    if (!hydrated && farmland.getValue(DELUXE)) {
-                        hydrated = true;
-                    } else {
+                    if (!farmland.getValue(DELUXE)) {
                         Util.setDry(level, pos);
                     }
                 }
@@ -109,6 +101,10 @@ public class GardenPotBlock extends FarmBlock implements IForgeBlock {
         }
     }
 
+    @Override
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        return true;
+    }
 
     @Override
     public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {

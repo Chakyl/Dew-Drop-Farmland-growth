@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static cool.bot.dewdropfarmland.utils.VineryMixins.handlePaleStemGrowth;
+import static cool.bot.dewdropfarmland.utils.VineryCompat.handlePaleStemGrowth;
 
 @Mixin(value = PaleStemBlock.class)
 public abstract class PaleStemBlockMixin {

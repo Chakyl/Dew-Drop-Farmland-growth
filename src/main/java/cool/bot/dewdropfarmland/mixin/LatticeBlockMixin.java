@@ -1,7 +1,6 @@
 package cool.bot.dewdropfarmland.mixin;
 
 import cool.bot.dewdropfarmland.Config;
-import cool.bot.dewdropfarmland.DewDropFarmland;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -19,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static cool.bot.dewdropfarmland.utils.VineryMixins.handleLatticeGrowth;
+import static cool.bot.dewdropfarmland.utils.VineryCompat.handleLatticeGrowth;
 
 @Mixin(value = LatticeBlock.class)
 public abstract class LatticeBlockMixin {

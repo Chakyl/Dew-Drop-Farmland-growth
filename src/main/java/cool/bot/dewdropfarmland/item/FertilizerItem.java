@@ -47,7 +47,7 @@ public class FertilizerItem extends Item {
                         return InteractionResult.FAIL;
                     }
                 }else if (level.getBlockState(posClicked).getBlock() instanceof GardenPotBlock){
-                    if (stack.is(ModElements.DELUXE_HYDRATING_FERTILIZER.get())) {
+                    if (stack.is(ModElements.DELUXE_HYDRATING_FERTILIZER.get()) && !level.getBlockState(posClicked).getValue(GardenPotBlock.DELUXE)) {
                         level.setBlock(posClicked, level.getBlockState(posClicked).setValue(GardenPotBlock.DELUXE, true), 3);
                     } else {
                         return InteractionResult.FAIL;

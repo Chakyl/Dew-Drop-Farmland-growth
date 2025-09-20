@@ -1,4 +1,6 @@
 {
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
 	"render_type": "cutout",
 	"textures": {
 		"0": "dew_drop_farmland_growth:block/garden_pot",
@@ -32,8 +34,8 @@
 			}
 		},
 		{
-			"from": [1, 0, 1],
-			"to": [15, 10, 15],
+			"from": [0.95, 0, 0.95],
+			"to": [15.05, 10, 15.05],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
 			"faces": {
 				"north": {"uv": [8.5, 3, 15.5, 8], "texture": "#0"},
