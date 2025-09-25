@@ -120,8 +120,8 @@ public class CropHandlerUtils {
                     level.setBlockAndUpdate(pos.above(i), block.defaultBlockState());
                     ForgeHooks.onCropsGrowPost(level, pos.above(i), block.defaultBlockState());
                     level.setBlock(pos.above(i), block.defaultBlockState(), 4);
-                } else {
-                    level.setBlock(pos.above(i), block.defaultBlockState(), 4);
+                } else if (ForgeHooks.onCropsGrowPre(level, pos.above(i), block.defaultBlockState(), true)){
+                    level.setBlockAndUpdate(pos.above(i), block.defaultBlockState());
                     level.neighborChanged(block.defaultBlockState(), pos.above(i - 1), block, pos.above(i), false);
                 }
                 if (growth > 1) {
