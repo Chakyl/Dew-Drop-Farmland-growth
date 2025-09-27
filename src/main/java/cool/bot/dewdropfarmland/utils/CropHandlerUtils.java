@@ -26,7 +26,6 @@ import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 
 import static cool.bot.dewdropfarmland.utils.ModGrowthCompat.*;
 import static cool.bot.dewdropfarmland.utils.SeasonUtils.isGlassAboveBlock;
-import static net.minecraft.world.level.block.CropBlock.AGE;
 import static vectorwing.farmersdelight.common.block.TomatoVineBlock.ROPELOGGED;
 
 public class CropHandlerUtils {
@@ -48,10 +47,10 @@ public class CropHandlerUtils {
     }
 
 
-    public static void growBush(ServerLevel level, Block bushBlock, BlockPos pos, int maxAge, BlockState farmland) {
-        int bushAge = level.getBlockState(pos).getValue(AGE);
-        if (bushAge < maxAge)
-            level.setBlock(pos, bushBlock.defaultBlockState().setValue(AGE, bushAge + getFertilizerIncrease(bushAge, maxAge, farmland)), 2);
+    public static void growSweetBerryBush(ServerLevel level, SweetBerryBushBlock bushBlock, BlockPos pos, BlockState farmland) {
+        int bushAge = level.getBlockState(pos).getValue(SweetBerryBushBlock.AGE);
+        if (bushAge < SweetBerryBushBlock.MAX_AGE)
+            level.setBlock(pos, bushBlock.defaultBlockState().setValue(SweetBerryBushBlock.AGE, bushAge + getFertilizerIncrease(bushAge, SweetBerryBushBlock.MAX_AGE, farmland)), 2);
     }
 
     public static void handleCropGrowth(BlockState crop, ServerLevel level, BlockPos abovePos, BlockState farmland, RandomSource random) {
@@ -79,7 +78,7 @@ public class CropHandlerUtils {
                 flaxBlock.growCropBy(level, abovePos, crop, getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland));
             }
         } else if (aboveBlock instanceof SweetBerryBushBlock sweetBerryBushBlock) {
-            growBush(level, sweetBerryBushBlock, abovePos, SweetBerryBushBlock.MAX_AGE, farmland);
+            growSweetBerryBush(level, sweetBerryBushBlock, abovePos, farmland);
         } else if (DewDropFarmland.WINDSWEPT_INSTALLED && aboveBlock instanceof WildBerryBushBlock) {
             growWildBerryBush(level, aboveBlock, abovePos, farmland);
         } else if (DewDropFarmland.VINERY_INSTALLED && aboveBlock instanceof GrapeBush) {
@@ -120,7 +119,7 @@ public class CropHandlerUtils {
                     level.setBlockAndUpdate(pos.above(i), block.defaultBlockState());
                     ForgeHooks.onCropsGrowPost(level, pos.above(i), block.defaultBlockState());
                     level.setBlock(pos.above(i), block.defaultBlockState(), 4);
-                } else if (ForgeHooks.onCropsGrowPre(level, pos.above(i), block.defaultBlockState(), true)){
+                } else if (ForgeHooks.onCropsGrowPre(level, pos.above(i), block.defaultBlockState(), true)) {
                     level.setBlockAndUpdate(pos.above(i), block.defaultBlockState());
                     level.neighborChanged(block.defaultBlockState(), pos.above(i - 1), block, pos.above(i), false);
                 }
