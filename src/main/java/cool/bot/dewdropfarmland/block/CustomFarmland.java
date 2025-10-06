@@ -98,7 +98,7 @@ public class CustomFarmland extends FarmBlock implements IForgeBlock {
                     if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND) && crop.getBlock() instanceof CropBlock cropBlock && cropBlock.getAge(crop) < Math.floor((float) cropBlock.getMaxAge() / 2)) {
                         hydrated = true;
                     }
-                    if (!hydrated && farmland.is(SturdyFarmlandBlockTags.HYDRATING_FARMLAND)) {
+                    if (farmland.is(SturdyFarmlandBlockTags.DELUXE_HYDRATING_FARMLAND)) {
                         hydrated = true;
                     }
                     if (!hydrated) {
