@@ -3,12 +3,17 @@ package cool.bot.dewdropfarmland.utils;
 import com.baisylia.culturaldelights.block.ModBlocks;
 import com.baisylia.culturaldelights.block.custom.CornBlock;
 import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
+import com.cobblemon.mod.common.block.MintBlock;
+import com.cobblemon.mod.common.block.RevivalHerbBlock;
+import com.github.mnesikos.flowerary.block.TallFlowerCropBlock;
 import com.rosemods.windswept.common.block.WildBerryBushBlock;
+import cool.bot.dewdropfarmland.DewDropFarmland;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.common.ForgeHooks;
 import net.ribs.vintagedelight.block.custom.GearoBerryBushBlock;
@@ -16,6 +21,7 @@ import net.satisfy.vinery.core.block.GrapeBush;
 import vectorwing.farmersdelight.common.block.RiceBlock;
 import vectorwing.farmersdelight.common.block.RicePaniclesBlock;
 
+import static com.github.mnesikos.flowerary.block.TallFlowerCropBlock.SEGMENT;
 import static cool.bot.dewdropfarmland.utils.CropHandlerUtils.getFertilizerIncrease;
 
 public class ModGrowthCompat {
@@ -85,4 +91,29 @@ public class ModGrowthCompat {
             level.setBlock(pos, bushBlock.defaultBlockState().setValue(WildBerryBushBlock.AGE, bushAge + getFertilizerIncrease(bushAge, 3, farmland)), 2);
     }
 
+    public static void growTallFlowerCropBlock(ServerLevel level, BlockState crop, Block cropBlock, BlockPos pos, BlockState farmland) {
+        if (crop.getValue(SEGMENT) == DoubleBlockHalf.UPPER) {
+            pos = pos.below();
+        }
+        int age = ((TallFlowerCropBlock)cropBlock).getAge(crop);
+        int growthAge = age +  getFertilizerIncrease(age, 3, farmland);
+//        growthAge = Math.min(growthAge, ((TallFlowerCropBlock)cropBlock).getMaxAge());
+//        if (growthAge >= ((TallFlowerCropBlock)cropBlock).upperSegmentAge) {
+//            if (!((TallFlowerCropBlock)cropBlock).canGrowUp(level, pos)) {
+//                return;
+//            }
+//
+//            level.setBlock(pos.above(), ((TallFlowerCropBlock) level.getBlockState(pos.above()).getBlock()).getStateForAge(growthAge).setValue(SEGMENT, DoubleBlockHalf.UPPER), 2);
+//        }
+
+        level.setBlock(pos, ((TallFlowerCropBlock)cropBlock).getStateForAge(growthAge), 2);
+    }
+
+    public static void growRevivalHerbBlock(ServerLevel level, Block revivalHerbBlock, BlockPos pos, BlockState farmland) {
+        BlockState herbState = level.getBlockState(pos);
+        int mintAge = ((CropBlock)revivalHerbBlock).getAge(herbState);
+        if (mintAge < 8) {
+            level.setBlock(pos, herbState.setValue(RevivalHerbBlock.Companion.getAGE(), mintAge + getFertilizerIncrease(mintAge, RevivalHerbBlock.MAX_AGE, farmland)), 2);
+        }
+    }
 }

@@ -2,6 +2,8 @@ package cool.bot.dewdropfarmland.utils;
 
 import com.baisylia.culturaldelights.block.custom.CornBlock;
 import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
+import com.cobblemon.mod.common.block.BerryBlock;
+import com.cobblemon.mod.common.block.RevivalHerbBlock;
 import com.rosemods.windswept.common.block.WildBerryBushBlock;
 import cool.bot.dewdropfarmland.DewDropFarmland;
 import cool.bot.dewdropfarmland.block.CustomStemBlock;
@@ -57,8 +59,14 @@ public class CropHandlerUtils {
         Block aboveBlock = crop.getBlock();
         int growthAmount;
         BlockState newState;
-        if (aboveBlock instanceof CropBlock cropBlock) {
-            if (!cropBlock.isMaxAge(crop) && !(DewDropFarmland.SUPPLEMENTARIES_INSTALLED && cropBlock instanceof FlaxBlock)) {
+        if (DewDropFarmland.COBBLEMON_INSTALLED && aboveBlock instanceof RevivalHerbBlock) {
+            growRevivalHerbBlock(level, aboveBlock, abovePos, farmland);
+        } else if (aboveBlock instanceof CropBlock cropBlock) {
+            if (DewDropFarmland.SUPPLEMENTARIES_INSTALLED && cropBlock instanceof FlaxBlock flaxBlock) {
+                flaxBlock.growCropBy(level, abovePos, crop, getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland));
+//            } else if (DewDropFarmland.FLOWERARY_INSTALLED && cropBlock instanceof TallFlowerCropBlock) {
+//                growTallFlowerCropBlock(level, crop, aboveBlock, abovePos, farmland);
+            } else if (!cropBlock.isMaxAge(crop)) {
                 growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
                 newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + growthAmount);
                 level.setBlock(abovePos, newState, 2);
@@ -74,8 +82,6 @@ public class CropHandlerUtils {
                         tomatoVineBlock.attemptRopeClimb(level, abovePos, random);
                     }
                 }
-            } else if (DewDropFarmland.SUPPLEMENTARIES_INSTALLED && cropBlock instanceof FlaxBlock flaxBlock) {
-                flaxBlock.growCropBy(level, abovePos, crop, getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland));
             }
         } else if (aboveBlock instanceof SweetBerryBushBlock sweetBerryBushBlock) {
             growSweetBerryBush(level, sweetBerryBushBlock, abovePos, farmland);
@@ -89,7 +95,8 @@ public class CropHandlerUtils {
             growCulturalDelightCorn(level, aboveBlock, abovePos, CornBlock.AGE, CornUpperBlock.AGE, farmland);
         } else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && aboveBlock instanceof RiceBlock) {
             growFarmersDelightRice(level, aboveBlock, abovePos, farmland);
-
+        } else if (DewDropFarmland.COBBLEMON_INSTALLED && aboveBlock instanceof BerryBlock berryBlock) {
+            berryBlock.performBonemeal(level, random, abovePos, crop);
         } else if (aboveBlock instanceof CustomStemBlock stemBlock) {
             int stemAge = stemBlock.getAge(crop);
             if (stemAge == 7) {

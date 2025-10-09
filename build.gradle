@@ -173,6 +173,10 @@ dependencies {
     implementation fg.deobf("curse.maven:windsweptmod-636321:7003870")
     // Vinery
     implementation fg.deobf("curse.maven:lets-do-vinery-704465:6965751")
+    // Flowerary
+    implementation fg.deobf("curse.maven:flowerary-1272888:6563174")
+    // Cobblemon
+    implementation fg.deobf("curse.maven:cobblemon-687131:5375390")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

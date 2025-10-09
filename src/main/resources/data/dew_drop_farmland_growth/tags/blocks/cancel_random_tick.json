@@ -18,6 +18,8 @@
     { "id": "vinery:bamboo_lattice", "required": false },
     { "id": "vinery:cherry_lattice", "required": false },
     { "id": "vinery:dark_cherry_lattice", "required": false },
-    { "id": "windswept:wild_berry_bush", "required": false }
+    { "id": "windswept:wild_berry_bush", "required": false },
+    { "id":  "#cobblemon:crops", "required":  false },
+    { "id":  "#cobblemon:berries", "required":  false }
   ]
 }

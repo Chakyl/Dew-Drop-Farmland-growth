@@ -23,6 +23,8 @@ public class DewDropFarmland {
     public static boolean CULTURAL_DELIGHTS_INSTALLED = false;
     public static boolean WINDSWEPT_INSTALLED = false;
     public static boolean VINERY_INSTALLED = false;
+    public static boolean FLOWERARY_INSTALLED = false;
+    public static boolean COBBLEMON_INSTALLED = false;
 
     public DewDropFarmland() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

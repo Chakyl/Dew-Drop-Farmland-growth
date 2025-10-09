@@ -4,7 +4,7 @@
     "item": "minecraft:netherite_ingot"
   },
   "base": {
-    "item": "dew_drop_farmland_growth:gold_sprinkler"
+    "item": "dew_drop_farmland_growth:diamond_sprinkler"
   },
   "result": {
     "item": "dew_drop_farmland_growth:netherite_sprinkler"
