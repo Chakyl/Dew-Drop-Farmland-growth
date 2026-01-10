@@ -22,13 +22,11 @@ import net.ribs.vintagedelight.block.custom.GearoBerryBushBlock;
 import net.satisfy.vinery.core.block.GrapeBush;
 import sereneseasons.init.ModConfig;
 import sereneseasons.init.ModFertility;
-import vectorwing.farmersdelight.common.block.BuddingTomatoBlock;
+import vectorwing.farmersdelight.common.block.BuddingBushBlock;
 import vectorwing.farmersdelight.common.block.RiceBlock;
-import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 
 import static cool.bot.dewdropfarmland.utils.ModGrowthCompat.*;
 import static cool.bot.dewdropfarmland.utils.SeasonUtils.isGlassAboveBlock;
-import static vectorwing.farmersdelight.common.block.TomatoVineBlock.ROPELOGGED;
 
 public class CropHandlerUtils {
 
@@ -70,17 +68,8 @@ public class CropHandlerUtils {
                 growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
                 newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + growthAmount);
                 level.setBlock(abovePos, newState, 2);
-                if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && cropBlock instanceof TomatoVineBlock tomatoVineBlock) {
-                    BlockPos aboveCropPos = abovePos.offset(0, 1, 0);
-                    BlockState tomatoVine = level.getBlockState(aboveCropPos);
-                    if (tomatoVine.getBlock() instanceof TomatoVineBlock aboveTomatoVineBlock) {
-                        if (!aboveTomatoVineBlock.isMaxAge(tomatoVine)) {
-                            newState = aboveTomatoVineBlock.getStateForAge(aboveTomatoVineBlock.getAge(crop) + 1).setValue(ROPELOGGED, true);
-                            level.setBlock(aboveCropPos, newState, 2);
-                        }
-                    } else {
-                        tomatoVineBlock.attemptRopeClimb(level, abovePos, random);
-                    }
+                if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && isVineLike(cropBlock)) {
+                    growVineLikeCrop(level, cropBlock,crop, abovePos, random);
                 }
             }
         } else if (aboveBlock instanceof SweetBerryBushBlock sweetBerryBushBlock) {
@@ -112,8 +101,8 @@ public class CropHandlerUtils {
             for (int i = 0; i < growthAmount; i++) {
                 pitcherCropBlock.performBonemeal(level, random, abovePos, level.getBlockState(abovePos));
             }
-        } else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && aboveBlock instanceof BuddingTomatoBlock tomatoBlock) {
-            tomatoBlock.growPastMaxAge(crop, level, abovePos, random);
+        } else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && aboveBlock instanceof BuddingBushBlock bushBlock) {
+            bushBlock.growPastMaxAge(crop, level, abovePos, random);
         }
     }
 
