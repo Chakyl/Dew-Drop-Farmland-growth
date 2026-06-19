@@ -57,6 +57,7 @@ public class CropHandlerUtils {
         Block aboveBlock = crop.getBlock();
         int growthAmount;
         BlockState newState;
+        if (crop.is(SturdyFarmlandBlockTags.NOT_DAILY)) return;
         if (DewDropFarmland.COBBLEMON_INSTALLED && aboveBlock instanceof RevivalHerbBlock) {
             growRevivalHerbBlock(level, aboveBlock, abovePos, farmland);
         } else if (aboveBlock instanceof CropBlock cropBlock) {

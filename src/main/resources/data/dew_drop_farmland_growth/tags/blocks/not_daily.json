@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+      { "id": "croptopia:almond_crop", "required": false },
+      { "id": "croptopia:apple_crop", "required": false },
+      { "id": "croptopia:apricot_crop", "required": false },
+      { "id": "croptopia:avocado_crop", "required": false },
+      { "id": "croptopia:banana_crop", "required": false },
+      { "id": "croptopia:cashew_crop", "required": false },
+      { "id": "croptopia:cherry_crop", "required": false },
+      { "id": "croptopia:coconut_crop", "required": false },
+      { "id": "croptopia:date_crop", "required": false },
+      { "id": "croptopia:dragonfruit_crop", "required": false },
+      { "id": "croptopia:fig_crop", "required": false },
+      { "id": "croptopia:grapefruit_crop", "required": false },
+      { "id": "croptopia:kumquat_crop", "required": false },
+      { "id": "croptopia:lemon_crop", "required": false },
+      { "id": "croptopia:lime_crop", "required": false },
+      { "id": "croptopia:mango_crop", "required": false },
+      { "id": "croptopia:nectarine_crop", "required": false },
+      { "id": "croptopia:nutmeg_crop", "required": false },
+      { "id": "croptopia:orange_crop", "required": false },
+      { "id": "croptopia:peach_crop", "required": false },
+      { "id": "croptopia:pear_crop", "required": false },
+      { "id": "croptopia:pecan_crop", "required": false },
+      { "id": "croptopia:persimmon_crop", "required": false },
+      { "id": "croptopia:plum_crop", "required": false },
+      { "id": "croptopia:starfruit_crop", "required": false },
+      { "id": "croptopia:walnut_crop", "required": false }
+  ]
+}

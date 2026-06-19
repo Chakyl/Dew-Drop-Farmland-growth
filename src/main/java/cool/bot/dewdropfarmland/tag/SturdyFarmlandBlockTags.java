@@ -22,6 +22,7 @@ public class SturdyFarmlandBlockTags {
 
 
     public static final TagKey<Block> CANCEL_RANDOM_TICK = tag("cancel_random_tick");
+    public static final TagKey<Block> NOT_DAILY = tag("not_daily");
 
     public static TagKey<Block> tag(String name) {
         return BlockTags.create(new ResourceLocation("dew_drop_farmland_growth", name));
