@@ -20,6 +20,7 @@ public class DewDropFarmland {
     public static boolean FARMERS_DELIGHT_INSTALLED = false;
     public static boolean VINTAGEDELIGHT_INSTALLED = false;
     public static boolean SUPPLEMENTARIES_INSTALLED = false;
+    public static boolean HAUNTED_HARVEST_INSTALLED = false;
     public static boolean CULTURAL_DELIGHTS_INSTALLED = false;
     public static boolean WINDSWEPT_INSTALLED = false;
     public static boolean VINERY_INSTALLED = false;

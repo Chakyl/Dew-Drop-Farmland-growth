@@ -12,6 +12,7 @@ import cool.bot.dewdropfarmland.DewDropFarmland;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -148,18 +149,16 @@ public class ModGrowthCompat {
         }
         int age = ((TallFlowerCropBlock) cropBlock).getAge(crop);
         int growthAge = age + getFertilizerIncrease(age, 3, farmland);
-//        growthAge = Math.min(growthAge, ((TallFlowerCropBlock)cropBlock).getMaxAge());
-//        if (growthAge >= ((TallFlowerCropBlock)cropBlock).upperSegmentAge) {
-//            if (!((TallFlowerCropBlock)cropBlock).canGrowUp(level, pos)) {
-//                return;
-//            }
-//
-//            level.setBlock(pos.above(), ((TallFlowerCropBlock) level.getBlockState(pos.above()).getBlock()).getStateForAge(growthAge).setValue(SEGMENT, DoubleBlockHalf.UPPER), 2);
-//        }
+        growthAge = Math.min(growthAge, ((TallFlowerCropBlock)cropBlock).getMaxAge());
+        if (growthAge >= ((TallFlowerCropBlock)cropBlock).getUpperSegmentAge()) {
+            if (!((TallFlowerCropBlock)cropBlock).canGrowUp(level, pos)) {
+                return;
+            }
+            level.setBlock(pos.above(), ((TallFlowerCropBlock) cropBlock).getStateForAge(growthAge).setValue(SEGMENT, DoubleBlockHalf.UPPER), 2);
+        }
 
         level.setBlock(pos, ((TallFlowerCropBlock) cropBlock).getStateForAge(growthAge), 2);
     }
-
     public static void growRevivalHerbBlock(ServerLevel level, Block revivalHerbBlock, BlockPos pos, BlockState farmland) {
         BlockState herbState = level.getBlockState(pos);
         int mintAge = ((CropBlock) revivalHerbBlock).getAge(herbState);

@@ -16,6 +16,7 @@ public class CommonEvents {
             event.enqueueWork(() -> DewDropFarmland.FARMERS_DELIGHT_INSTALLED = ModList.get().isLoaded("farmersdelight"));
             event.enqueueWork(() -> DewDropFarmland.VINTAGEDELIGHT_INSTALLED = ModList.get().isLoaded("vintagedelight"));
             event.enqueueWork(() -> DewDropFarmland.SUPPLEMENTARIES_INSTALLED = ModList.get().isLoaded("supplementaries"));
+            event.enqueueWork(() -> DewDropFarmland.HAUNTED_HARVEST_INSTALLED = ModList.get().isLoaded("hauntedharvest"));
             event.enqueueWork(() -> DewDropFarmland.CULTURAL_DELIGHTS_INSTALLED = ModList.get().isLoaded("culturaldelights"));
             event.enqueueWork(() -> DewDropFarmland.WINDSWEPT_INSTALLED = ModList.get().isLoaded("windswept"));
             event.enqueueWork(() -> DewDropFarmland.VINERY_INSTALLED = ModList.get().isLoaded("vinery"));

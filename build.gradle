@@ -174,11 +174,13 @@ dependencies {
     // Vinery
     implementation fg.deobf("curse.maven:lets-do-vinery-704465:6965751")
     // Flowerary
-    implementation fg.deobf("curse.maven:flowerary-1272888:6563174")
+    implementation fg.deobf("curse.maven:flowerary-1272888:7154561")
     // Cobblemon
     implementation fg.deobf("curse.maven:cobblemon-687131:5375390")
     // Hearth and Harvest
     implementation fg.deobf("curse.maven:hearth-and-harvest-1212197:6891526")
+    // Haunted Harvest, not to be confused for hearth and harvest
+    implementation fg.deobf("curse.maven:haunted-harvest-541753:6032347")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

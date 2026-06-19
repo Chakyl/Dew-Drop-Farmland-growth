@@ -4,10 +4,12 @@ import com.baisylia.culturaldelights.block.custom.CornBlock;
 import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
 import com.cobblemon.mod.common.block.BerryBlock;
 import com.cobblemon.mod.common.block.RevivalHerbBlock;
+import com.github.mnesikos.flowerary.block.TallFlowerCropBlock;
 import com.rosemods.windswept.common.block.WildBerryBushBlock;
 import cool.bot.dewdropfarmland.DewDropFarmland;
 import cool.bot.dewdropfarmland.block.CustomStemBlock;
 import cool.bot.dewdropfarmland.tag.SturdyFarmlandBlockTags;
+import net.mehvahdjukaar.hauntedharvest.blocks.CornBaseBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.FlaxBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -63,8 +65,11 @@ public class CropHandlerUtils {
         } else if (aboveBlock instanceof CropBlock cropBlock) {
             if (DewDropFarmland.SUPPLEMENTARIES_INSTALLED && cropBlock instanceof FlaxBlock flaxBlock) {
                 flaxBlock.growCropBy(level, abovePos, crop, getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland));
-//            } else if (DewDropFarmland.FLOWERARY_INSTALLED && cropBlock instanceof TallFlowerCropBlock) {
-//                growTallFlowerCropBlock(level, crop, aboveBlock, abovePos, farmland);
+            } else if (DewDropFarmland.HAUNTED_HARVEST_INSTALLED && cropBlock instanceof CornBaseBlock cornBaseBlock) {
+                cornBaseBlock.growCropBy(level, abovePos, crop, getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland));
+            } else if (DewDropFarmland.FLOWERARY_INSTALLED && cropBlock instanceof TallFlowerCropBlock tallFlowerCropBlock) {
+                growTallFlowerCropBlock(level, crop, aboveBlock, abovePos, farmland);
+//                tallFlowerCropBlock.growCrops(level, abovePos, crop);
             } else if (!cropBlock.isMaxAge(crop)) {
                 growthAmount = getFertilizerIncrease(cropBlock.getAge(crop), cropBlock.getMaxAge(), farmland);
                 newState = cropBlock.getStateForAge(cropBlock.getAge(crop) + growthAmount);
