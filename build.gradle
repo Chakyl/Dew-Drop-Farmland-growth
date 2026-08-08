@@ -160,7 +160,7 @@ dependencies {
     implementation fg.deobf("curse.maven:serene-seasons-291874:6398227")
     implementation fg.deobf("curse.maven:glitchcore-955399:5787839")
     // Farmers Delight 1.2.7 - 1.20.1
-    implementation fg.deobf("curse.maven:farmers-delight-398521:6154802")
+    implementation fg.deobf("curse.maven:farmers-delight-398521:8083474")
     // VintageDelight 0.1.6
     implementation fg.deobf("curse.maven:vintage-delight-949719:5847856")
     // Supplementaries 3.1.18
@@ -181,6 +181,8 @@ dependencies {
     implementation fg.deobf("curse.maven:hearth-and-harvest-1212197:6891526")
     // Haunted Harvest, not to be confused for hearth and harvest
     implementation fg.deobf("curse.maven:haunted-harvest-541753:6032347")
+    // Kaleidoscope Mods
+    implementation fg.deobf("curse.maven:kaleidoscope-cookery-1309203:8266769")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

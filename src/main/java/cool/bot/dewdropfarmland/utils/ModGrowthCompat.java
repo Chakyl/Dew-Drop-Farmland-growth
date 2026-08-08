@@ -7,12 +7,12 @@ import com.baisylia.culturaldelights.block.custom.CornBlock;
 import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
 import com.cobblemon.mod.common.block.RevivalHerbBlock;
 import com.github.mnesikos.flowerary.block.TallFlowerCropBlock;
+import com.github.ysbbbbbb.kaleidoscopecookery.block.crop.RiceCropBlock;
 import com.rosemods.windswept.common.block.WildBerryBushBlock;
 import cool.bot.dewdropfarmland.DewDropFarmland;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,13 +21,14 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.common.ForgeHooks;
 import net.ribs.vintagedelight.block.custom.GearoBerryBushBlock;
 import net.satisfy.vinery.core.block.GrapeBush;
+import vectorwing.farmersdelight.common.block.HangingTomatoBlock;
 import vectorwing.farmersdelight.common.block.RiceBlock;
 import vectorwing.farmersdelight.common.block.RicePaniclesBlock;
-import vectorwing.farmersdelight.common.block.TomatoVineBlock;
+import vectorwing.farmersdelight.common.block.TomatoBlock;
 
 import static com.github.mnesikos.flowerary.block.TallFlowerCropBlock.SEGMENT;
 import static cool.bot.dewdropfarmland.utils.CropHandlerUtils.getFertilizerIncrease;
-import static vectorwing.farmersdelight.common.block.TomatoVineBlock.ROPELOGGED;
+import static vectorwing.farmersdelight.common.block.TomatoBlock.ROPELOGGED;
 
 public class ModGrowthCompat {
     public static void growFarmersDelightRice(ServerLevel level, Block pRiceBlock, BlockPos pos, BlockState farmland) {
@@ -58,6 +59,26 @@ public class ModGrowthCompat {
 
     }
 
+    public static void growKaleidoscopeRice(ServerLevel level, Block pRiceBlock, BlockPos pos) {
+        RiceCropBlock riceBlock = (RiceCropBlock) pRiceBlock;
+        BlockState state = level.getBlockState(pos);
+        int age = state.getValue(RiceCropBlock.AGE);
+        if (age <= riceBlock.getMaxAge()) {
+            if (ForgeHooks.onCropsGrowPre(level, pos, state, true)) {
+                if (age != riceBlock.getMaxAge()) {
+                    if (level.getBlockState(pos.above()).getBlock() instanceof RiceCropBlock ricePaniclesBlock) {
+                        int panicleAge = level.getBlockState(pos.above()).getValue(RiceCropBlock.AGE);
+                        if (panicleAge < ricePaniclesBlock.getMaxAge()) {
+                            int flags = 2 | 16;
+                            level.setBlock(pos, state.setValue(RiceCropBlock.AGE, panicleAge + 1), flags);
+                            level.setBlock(pos.above(), state.setValue(RiceCropBlock.AGE, panicleAge + 1).setValue(RiceCropBlock.WATERLOGGED, false).setValue(RiceCropBlock.LOCATION, 1), flags);                        }
+                    }
+                }
+            }
+        }
+
+    }
+
     public static void growCulturalDelightCorn(ServerLevel level, Block cornBlock, BlockPos pos, IntegerProperty ageProperty, IntegerProperty upperAgeProperty, BlockState farmland) {
         BlockPos aboveAbovePos = pos.above();
         int cornAge = level.getBlockState(pos).getValue(ageProperty);
@@ -79,19 +100,19 @@ public class ModGrowthCompat {
     }
 
     public static boolean isVineLike(Block questionableVineLike) {
-        if (questionableVineLike instanceof TomatoVineBlock) {
+        if (questionableVineLike instanceof TomatoBlock tomatoBlock) {
             return true;
-        } else if (DewDropFarmland.HEARTH_AND_HARVEST_INSTALLED && questionableVineLike instanceof RedGrapeVineBlock) {
-            DewDropFarmland.LOGGER.info("Red Grape vine!");
+        }
+        if (DewDropFarmland.HEARTH_AND_HARVEST_INSTALLED && questionableVineLike instanceof RedGrapeVineBlock) {
             return true;
-        } else return DewDropFarmland.HEARTH_AND_HARVEST_INSTALLED && questionableVineLike instanceof GreenGrapeVineBlock;
+        } else
+            return DewDropFarmland.HEARTH_AND_HARVEST_INSTALLED && questionableVineLike instanceof GreenGrapeVineBlock;
     }
 
     public static void attemptVineLikeRopeClimb(ServerLevel level, Block vineBlock, BlockPos pos, RandomSource random) {
-        if (vineBlock instanceof TomatoVineBlock) {
-            ((TomatoVineBlock) vineBlock).attemptRopeClimb(level, pos, random);
+        if (vineBlock instanceof TomatoBlock tomatoBlock) {
+            tomatoBlock.climbRopeAbove(level, pos);
         } else if (DewDropFarmland.HEARTH_AND_HARVEST_INSTALLED && vineBlock instanceof RedGrapeVineBlock) {
-            DewDropFarmland.LOGGER.info("Attempt growing red Grape vine!");
             ((RedGrapeVineBlock) vineBlock).attemptRopeClimb(level, pos, random);
         } else if (DewDropFarmland.HEARTH_AND_HARVEST_INSTALLED && vineBlock instanceof GreenGrapeVineBlock) {
             ((GreenGrapeVineBlock) vineBlock).attemptRopeClimb(level, pos, random);
@@ -104,7 +125,22 @@ public class ModGrowthCompat {
         BlockPos aboveCropPos = pos.offset(0, 1, 0);
         BlockState vine = level.getBlockState(aboveCropPos);
         BlockState newState;
-        if (vine.getBlock() instanceof CropBlock aboveVineBlock && isVineLike(aboveVineBlock)) {
+        if (vine.getBlock() instanceof HangingTomatoBlock hangingTomatoBlock) {
+            if (!hangingTomatoBlock.isMaxAge(vine)) {
+                newState = hangingTomatoBlock.getStateForAge(hangingTomatoBlock.getAge(crop) + 1);
+                level.setBlock(aboveCropPos, newState, 2);
+            }
+            aboveCropPos = pos.offset(0, 2, 0);
+            vine = level.getBlockState(aboveCropPos);
+            if (vine.getBlock() instanceof HangingTomatoBlock aboveHangingTomato) {
+                if (!aboveHangingTomato.isMaxAge(vine)) {
+                    newState = aboveHangingTomato.getStateForAge(aboveHangingTomato.getAge(crop) + 1);
+                    level.setBlock(aboveCropPos, newState, 2);
+                }
+            } else {
+                attemptVineLikeRopeClimb(level, vineBlock, pos.offset(0, 1, 0), random);
+            }
+        } else if (vine.getBlock() instanceof CropBlock aboveVineBlock && isVineLike(aboveVineBlock)) {
             if (!aboveVineBlock.isMaxAge(vine)) {
                 newState = aboveVineBlock.getStateForAge(aboveVineBlock.getAge(crop) + 1).setValue(ROPELOGGED, true);
                 level.setBlock(aboveCropPos, newState, 2);
@@ -149,9 +185,9 @@ public class ModGrowthCompat {
         }
         int age = ((TallFlowerCropBlock) cropBlock).getAge(crop);
         int growthAge = age + getFertilizerIncrease(age, 3, farmland);
-        growthAge = Math.min(growthAge, ((TallFlowerCropBlock)cropBlock).getMaxAge());
-        if (growthAge >= ((TallFlowerCropBlock)cropBlock).getUpperSegmentAge()) {
-            if (!((TallFlowerCropBlock)cropBlock).canGrowUp(level, pos)) {
+        growthAge = Math.min(growthAge, ((TallFlowerCropBlock) cropBlock).getMaxAge());
+        if (growthAge >= ((TallFlowerCropBlock) cropBlock).getUpperSegmentAge()) {
+            if (!((TallFlowerCropBlock) cropBlock).canGrowUp(level, pos)) {
                 return;
             }
             level.setBlock(pos.above(), ((TallFlowerCropBlock) cropBlock).getStateForAge(growthAge).setValue(SEGMENT, DoubleBlockHalf.UPPER), 2);
@@ -159,6 +195,7 @@ public class ModGrowthCompat {
 
         level.setBlock(pos, ((TallFlowerCropBlock) cropBlock).getStateForAge(growthAge), 2);
     }
+
     public static void growRevivalHerbBlock(ServerLevel level, Block revivalHerbBlock, BlockPos pos, BlockState farmland) {
         BlockState herbState = level.getBlockState(pos);
         int mintAge = ((CropBlock) revivalHerbBlock).getAge(herbState);

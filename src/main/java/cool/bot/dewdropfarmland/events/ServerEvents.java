@@ -33,7 +33,7 @@ public class ServerEvents {
                         }
                         event.setCanceled(true);
                         event.setCancellationResult(InteractionResult.SUCCESS);
-                    } else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && clickedBlockState.is(ModTags.ROPES)) {
+                    } else if (DewDropFarmland.FARMERS_DELIGHT_INSTALLED && clickedBlockState.is(ModTags.Blocks.ROPES)) {
                         if (!event.getLevel().isClientSide) {
                             event.getLevel().setBlock(blockPos.below().below(), ModElements.ROPE_HANGING_GARDEN_POT.get().defaultBlockState(), 3);
                             stack.shrink(1);
