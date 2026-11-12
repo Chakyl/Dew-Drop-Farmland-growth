@@ -33,7 +33,6 @@ public abstract class LatticeBlockMixin {
         long dayTime = world.getDayTime() % 24000;
         if (dayTime >= Config.dailyTimeMin && dayTime < Config.dailyTimeMin + 10) {
             handleLatticeGrowth(state, world, pos);
-            world.scheduleTick(pos, state.getBlock(), 10);
         }
     }
 

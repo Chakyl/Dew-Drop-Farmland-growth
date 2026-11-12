@@ -2,6 +2,7 @@
 {
   "replace": false,
   "values": [
-    "dew_drop_farmland_growth:netherite_sprinkler"
+    "dew_drop_farmland_growth:netherite_sprinkler",
+    { "id": "farm_and_charm:water_sprinkler", "required": false }
   ]
 }

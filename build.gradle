@@ -183,6 +183,7 @@ dependencies {
     implementation fg.deobf("curse.maven:haunted-harvest-541753:6032347")
     // Kaleidoscope Mods
     implementation fg.deobf("curse.maven:kaleidoscope-cookery-1309203:8266769")
+    implementation fg.deobf("curse.maven:kaleidoscope-tavern-1475175:8350841")
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
